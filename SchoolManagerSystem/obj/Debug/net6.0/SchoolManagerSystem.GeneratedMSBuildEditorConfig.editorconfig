@@ -8,53 +8,53 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SchoolManagerSystem
 build_property.RootNamespace = SchoolManagerSystem
-build_property.ProjectDir = /home/ramon/Documentos/Blazor/SchoolManagerSystem/
+build_property.ProjectDir = /home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /home/ramon/Documentos/Blazor/SchoolManagerSystem
+build_property.MSBuildProjectDirectory = /home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem
 build_property._RazorSourceGeneratorDebug = 
 
-[/home/ramon/Documentos/Blazor/SchoolManagerSystem/App.razor]
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ramon/Documentos/Blazor/SchoolManagerSystem/Pages/Counter.razor]
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ramon/Documentos/Blazor/SchoolManagerSystem/Pages/FetchData.razor]
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Pages/FetchData.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmV0Y2hEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ramon/Documentos/Blazor/SchoolManagerSystem/Pages/Index.razor]
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ramon/Documentos/Blazor/SchoolManagerSystem/Shared/SurveyPrompt.razor]
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1N1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ramon/Documentos/Blazor/SchoolManagerSystem/_Imports.razor]
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ramon/Documentos/Blazor/SchoolManagerSystem/Shared/MainLayout.razor]
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL01haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-hphiide7k5
 
-[/home/ramon/Documentos/Blazor/SchoolManagerSystem/Shared/NavMenu.razor]
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL05hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-gpk986jzzh
 
-[/home/ramon/Documentos/Blazor/SchoolManagerSystem/Pages/Error.cshtml]
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ramon/Documentos/Blazor/SchoolManagerSystem/Pages/_Host.cshtml]
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/ramon/Documentos/Blazor/SchoolManagerSystem/Pages/_Layout.cshtml]
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Pages/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/ramon/Documentos/Blazor/SchoolManagerSystem/SchoolManagerSystem.csproj": {}
+    "/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/SchoolManagerSystem.csproj": {}
   },
   "projects": {
-    "/home/ramon/Documentos/Blazor/SchoolManagerSystem/SchoolManagerSystem.csproj": {
+    "/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/SchoolManagerSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/ramon/Documentos/Blazor/SchoolManagerSystem/SchoolManagerSystem.csproj",
+        "projectUniqueName": "/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/SchoolManagerSystem.csproj",
         "projectName": "SchoolManagerSystem",
-        "projectPath": "/home/ramon/Documentos/Blazor/SchoolManagerSystem/SchoolManagerSystem.csproj",
+        "projectPath": "/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/SchoolManagerSystem.csproj",
         "packagesPath": "/home/ramon/.nuget/packages/",
-        "outputPath": "/home/ramon/Documentos/Blazor/SchoolManagerSystem/obj/",
+        "outputPath": "/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/ramon/.nuget/NuGet/NuGet.Config"
@@ -37,6 +37,38 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.14, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.14, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[6.0.14, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "target": "Package",
+              "version": "[6.0.14, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.11, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[7.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -56,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.406/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.407/RuntimeIdentifierGraph.json"
         }
       }
     }
