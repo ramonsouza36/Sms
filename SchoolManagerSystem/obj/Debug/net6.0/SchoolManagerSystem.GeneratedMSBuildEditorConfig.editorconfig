@@ -47,8 +47,16 @@ build_metadata.AdditionalFiles.CssScope = b-hphiide7k5
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL05hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-gpk986jzzh
 
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Areas/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Pages/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Pages/_Host.cshtml]
@@ -58,3 +66,7 @@ build_metadata.AdditionalFiles.CssScope =
 [/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Pages/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
+
+[/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/Pages/Shared/_LayoutLogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19MYXlvdXRMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-tf9ncrvymn

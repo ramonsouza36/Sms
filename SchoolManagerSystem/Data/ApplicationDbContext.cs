@@ -9,4 +9,9 @@ public class ApplicationDbContext : IdentityDbContext
         : base(options)
     {
     }
+
+    public DbSet<SchoolManagerSystem.Models.Course> Course { get; set; }
+    public DbSet<SchoolManagerSystem.Models.Instructor> Instructor { get; set; }
+    public DbSet<SchoolManagerSystem.Models.Student> Student { get; set; }
+
 }

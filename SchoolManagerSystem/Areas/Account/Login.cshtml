@@ -1,0 +1,53 @@
+@page "/Login22"
+@model LoginModel
+@using SchoolManagerSystem.Areas.Account
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Login";
+    Layout = "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData.Values</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="~/css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <app>
+        <div class="sidebar">
+        </div>
+        <div class="main">
+            <div class="unix-login">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4">
+                            <div class="login-content">
+                                <div class="login-form">
+                                    <h4>Login</h4>
+                                    <form method="post">
+                                        <div class="form-group row">
+                                            <input type="text"  class="form-control" autofocus placeholder="Login" />
+                                        </div>
+                                        <div class="form-group row">
+                                            <input type="password" class="form-control" placeholder="Senha" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Fazer login" class="btn btn-automatiza btn-flat m-b-15 m-t-15" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </app>
+</body>
+</html>    

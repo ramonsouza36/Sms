@@ -1,3 +1,53 @@
+/* _content/SchoolManagerSystem/Pages/Shared/_LayoutLogin.cshtml.rz.scp.css */
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand[b-tf9ncrvymn] {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a[b-tf9ncrvymn] {
+  color: #0077cc;
+}
+
+.btn-primary[b-tf9ncrvymn] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active[b-tf9ncrvymn], .nav-pills .show > .nav-link[b-tf9ncrvymn] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.border-top[b-tf9ncrvymn] {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom[b-tf9ncrvymn] {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow[b-tf9ncrvymn] {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy[b-tf9ncrvymn] {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer[b-tf9ncrvymn] {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
 /* _content/SchoolManagerSystem/Shared/MainLayout.razor.rz.scp.css */
 .page[b-hphiide7k5] {
     position: relative;

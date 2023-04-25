@@ -298,3 +298,4 @@
 /home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/obj/Debug/net6.0/SchoolManagerSystem.csproj.CopyComplete
 /home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/obj/Debug/net6.0/SchoolManagerSystem.genruntimeconfig.cache
 /home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/obj/Debug/net6.0/ref/SchoolManagerSystem.dll
+/home/ramon/Documentos/Blazor/rep/Sms/SchoolManagerSystem/obj/Debug/net6.0/scopedcss/Pages/Shared/_LayoutLogin.cshtml.rz.scp.css
