@@ -92,6 +92,10 @@ input{
   margin-top: 0px;
   margin-bottom: 10%;
 }
+.form-control{
+    display: inline-flex;
+    width: max-content
+}
 .footer {
     position: absolute;
     bottom: 0;

@@ -1,26 +1,22 @@
 @page "/instructors"
+@using SchoolManagerSystem.Models;
+
 
 <PageTitle>Instructors</PageTitle>
 
-<div class="container-fluid col-md-12">
+<div class="container-fluid">
     <h3>Professores</h3>
 </div>
-
-<div class="row">
-    <div class="container-fluid col-md-12">
-        <input class="form-control col-md-4" type="text" placeholder="Nome" @bind-value="@Name"/>
-        <input class="form-control col-md-4" type="text" placeholder="Email" @bind-value="@Name"/>
-        <input class="form-control col-md-4" type="number" placeholder="Carga horária" />
-    </div>
-</div>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <textarea class="form-control" placeholder="Certificações" ></textarea>
-        </div>
+    <div class="row col-md-12 d-md-inline-flex">
+        <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Nome" @bind-value="@Name"/>
+        <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Email" @bind-value="@Email"/>
+        <input class="form-control border-secondary col-md-4 me-2" type="number" placeholder="Carga horária" @bind-value="@HourlyCost"/>
+    </div>
+    <div class="row mt-3">
+        <textarea class="mb-5 lh-md" rows = "5" placeholder="Certificações" @bind="@Certications"></textarea>
     </div>
 </div>
-
 <div>
     <button type="button" class="btn btn-primary">Salvar</button>
     <button type="button" class="btn btn-secondary">Cancelar</button>
@@ -28,4 +24,8 @@
 
 @code{
     public string Name = "";
+    public string Email = "";
+    public int HourlyCost = 0;
+    public string Certications = "";
+
 }
