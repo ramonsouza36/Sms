@@ -1,6 +1,9 @@
 @page "/instructors"
 @using SchoolManagerSystem.Models;
-
+@using SchoolManagerSystem.Data;
+@using System.Linq;
+@using Microsoft.EntityFrameworkCore;
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
 
 <PageTitle>Instructors</PageTitle>
 
@@ -18,7 +21,7 @@
     </div>
 </div>
 <div>
-    <button type="button" class="btn btn-primary">Salvar</button>
+    <button type="button" class="btn btn-primary" >Salvar</button>
     <button type="button" class="btn btn-secondary">Cancelar</button>
 </div>
 
@@ -27,5 +30,22 @@
     public string Email = "";
     public int HourlyCost = 0;
     public string Certications = "";
+
+    Instructor? instructor { get; set;}
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var course = await GetInstructors();
+        //return base.OnInitializedAsync();
+    }
+
+    public async Task<List<Instructor>> GetInstructors()
+    {
+        using var context = DbFactory.CreateDbContext();
+        var course = await context.Instructor.Where(i => i.Id != Guid.Empty).ToListAsync();
+        Console.WriteLine($"{course.FirstOrDefault().Name}");
+        return course;
+    }
 
 }

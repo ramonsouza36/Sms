@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SchoolManagerSystem.Data;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -19,6 +20,10 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
 var app = builder.Build();
+
+await using var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateAsyncScope();
+var options = scope.ServiceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>();
+await DatabaseUtility.EnsureDbCreatedAndSeedWithCountOfAsync(options, 500);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
