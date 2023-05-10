@@ -1,4 +1,4 @@
-@page "/instructors"
+@page "/instructorsadd"
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
 @using System.Linq;
@@ -21,7 +21,7 @@
     </div>
 </div>
 <div>
-    <button type="button" class="btn btn-primary" >Salvar</button>
+    <button type="button" class="btn btn-primary" @onclick = "(() => SetInstructors())">Salvar</button>
     <button type="button" class="btn btn-secondary">Cancelar</button>
 </div>
 
@@ -31,21 +31,29 @@
     public int HourlyCost = 0;
     public string Certications = "";
 
-    Instructor? instructor { get; set;}
+    //Instructor? instructor { get; set;}
 
 
-    protected override async Task OnInitializedAsync()
+    /*protected override async Task OnInitializedAsync()
     {
-        var course = await GetInstructors();
+        instructor = await GetInstructors();
         //return base.OnInitializedAsync();
-    }
+    }*/
 
-    public async Task<List<Instructor>> GetInstructors()
+    public async Task SetInstructors()
     {
         using var context = DbFactory.CreateDbContext();
-        var course = await context.Instructor.Where(i => i.Id != Guid.Empty).ToListAsync();
-        Console.WriteLine($"{course.FirstOrDefault().Name}");
-        return course;
+        var instructor = new Instructor();
+        instructor.Name = Name;
+        instructor.Email = Email;
+        instructor.HourlyCost = HourlyCost;
+        instructor.Certications = Certications;
+        instructor.Id = Guid.NewGuid();
+        //await context.S
+        if(instructor is not null && instructor.Id != Guid.Empty)
+            context.Instructor.Add(instructor);
+        Console.WriteLine($"{instructor!.Name}");
+        await context.SaveChangesAsync();
     }
 
 }

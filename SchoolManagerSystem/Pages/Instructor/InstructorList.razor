@@ -1,0 +1,54 @@
+@page "/instructors"
+
+@using SchoolManagerSystem.Models;
+@using SchoolManagerSystem.Data;
+@using System.Linq;
+@using Microsoft.EntityFrameworkCore;
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+
+<div class="container-fluid">
+    <div class="row col-md-12 d-md-inline-flex">
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Opções</th>
+            </tr>
+            @if (instructor is not null)
+            {
+                foreach(var item in instructor)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Email</td>
+                        <td></td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+@code{
+    public string Name = "";
+    public string Email = "";
+    public int HourlyCost = 0;
+    public string Certications = "";
+
+    List<Instructor>? instructor { get; set;}
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetInstructors();
+    }
+
+    public async Task<List<Instructor>> GetInstructors()
+    {
+        using var context = DbFactory.CreateDbContext();
+        instructor = await context.Instructor.Where(i => i.Id != Guid.Empty).ToListAsync();
+        Console.WriteLine($"{instructor!.FirstOrDefault()!.Name}");
+        return instructor;
+    }
+
+}
