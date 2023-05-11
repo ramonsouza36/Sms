@@ -1,0 +1,47 @@
+@page "/coursesadd"
+@using SchoolManagerSystem.Models;
+@using SchoolManagerSystem.Data;
+@using System.Linq;
+@using Microsoft.EntityFrameworkCore;
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+
+<PageTitle>Course</PageTitle>
+
+<div class="container-fluid">
+    <h3>Cursos</h3>
+</div>
+<div class="container-fluid">
+    <div class="row col-md-12 d-md-inline-flex">
+        <input class="form-control border-secondary col-md-3 me-2" type="text" placeholder="Nome" @bind-value="@Name"/>
+        <input class="form-control border-secondary col-md-3 me-2" type="text" placeholder="Requerimento" @bind-value="@Requirement"/>
+        <input class="form-control border-secondary col-md-2 me-2" type="number" placeholder="Carga horária" @bind-value="@WorkLoad"/>
+        <input class="form-control border-secondary col-md-2 me-2" type="number" placeholder="Preço" @bind-value="@Price"/>
+    </div>
+</div>
+<div>
+    <button type="button" class="btn btn-primary" @onclick = "(() => SetCourse())">Salvar</button>
+    <button type="button" class="btn btn-secondary">Cancelar</button>
+</div>
+
+@code{
+    public string Name = "";
+    public string Requirement = "";
+    public int WorkLoad = 0;
+    public float Price = 0;
+
+    public async Task SetCourse()
+    {
+        using var context = DbFactory.CreateDbContext();
+        var course = new Course();
+        course.Name = Name;
+        course.Requirement = Requirement;
+        course.WorkLoad = WorkLoad;
+        course.Price = Price;
+        course.Id = Guid.NewGuid();
+        if(course is not null && course.Id != Guid.Empty)
+            context.Course.Add(course);
+        Console.WriteLine($"{course!.Name}");
+        await context.SaveChangesAsync();
+    }
+
+}

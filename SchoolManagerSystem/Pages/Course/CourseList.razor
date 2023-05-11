@@ -1,12 +1,13 @@
-@page "/instructors"
+@page "/courses"
 
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
 @using System.Linq;
 @using Microsoft.EntityFrameworkCore;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
+
 <div>
-    <a href="instructorsadd" class="btn btn-primary active mb-3 text-center" role="button" data-bs-toggle="button" aria-pressed="true">
+    <a href="coursesadd" class="btn btn-primary active mb-3 text-center" role="button" data-bs-toggle="button" aria-pressed="true">
         <i class="fas fa-plus"> Adicionar</i>
     </a>
 </div>
@@ -18,13 +19,13 @@
                 <th>Email</th>
                 <th>Opções</th>
             </tr>
-            @if (instructor is not null)
+            @if (course is not null)
             {
-                foreach(var item in instructor)
+                foreach(var item in course)
                 {
                     <tr>
                         <td>@item.Name</td>
-                        <td>@item.Email</td>
+                        <td>@item.Price</td>
                         <td></td>
                     </tr>
                 }
@@ -33,26 +34,22 @@
     </div>
 </div>
 
-@code{
-    public string Name = "";
-    public string Email = "";
-    public int HourlyCost = 0;
-    public string Certications = "";
 
-    List<Instructor>? instructor { get; set;}
+@code{
+
+List<Course>? course { get; set;}
 
 
     protected override async Task OnInitializedAsync()
     {
-        await GetInstructors();
+        await GetCourses();
     }
 
-    public async Task<List<Instructor>> GetInstructors()
+    public async Task<List<Course>> GetCourses()
     {
         using var context = DbFactory.CreateDbContext();
-        instructor = await context.Instructor.Where(i => i.Id != Guid.Empty).ToListAsync();
-        Console.WriteLine($"{instructor!.FirstOrDefault()!.Name}");
-        return instructor;
+        course = await context.Course.Where(i => i.Id != Guid.Empty).ToListAsync();
+        Console.WriteLine($"{course!.FirstOrDefault()!.Name}");
+        return course;
     }
-
 }

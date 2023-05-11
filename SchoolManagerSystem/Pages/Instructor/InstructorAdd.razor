@@ -31,15 +31,6 @@
     public int HourlyCost = 0;
     public string Certications = "";
 
-    //Instructor? instructor { get; set;}
-
-
-    /*protected override async Task OnInitializedAsync()
-    {
-        instructor = await GetInstructors();
-        //return base.OnInitializedAsync();
-    }*/
-
     public async Task SetInstructors()
     {
         using var context = DbFactory.CreateDbContext();
