@@ -5,6 +5,7 @@
 @using System.Linq;
 @using Microsoft.EntityFrameworkCore;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject NavigationManager navManager;
 <div>
     <a href="instructorsadd" class="btn btn-primary active mb-3 text-center" role="button" data-bs-toggle="button" aria-pressed="true">
         <i class="fas fa-plus"> Adicionar</i>
@@ -13,22 +14,31 @@
 <div class="container-fluid">
     <div class="row col-md-12 d-md-inline-flex">
         <table class="table table-striped table-hover">
-            <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Opções</th>
-            </tr>
-            @if (instructor is not null)
-            {
-                foreach(var item in instructor)
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (instructor is not null)
                 {
-                    <tr>
-                        <td>@item.Name</td>
-                        <td>@item.Email</td>
-                        <td></td>
-                    </tr>
+                    foreach(var item in instructor)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Email</td>
+                            <td>
+                                <button title="Editar" class="btn btn-secondary text-light" @onclick="(() => showInstructor(item.Id))">
+                                    <i class="fas fa-pencil"></i>
+                                </button>
+                                <i class="fas fa-pencil "></i>
+                            </td>
+                        </tr>
+                    }
                 }
-            }
+            </tbody>
         </table>
     </div>
 </div>
@@ -55,4 +65,8 @@
         return instructor;
     }
 
+    public void showInstructor(Guid id)
+    {
+        navManager.NavigateTo("instructorsadd/{id}");
+    }
 }

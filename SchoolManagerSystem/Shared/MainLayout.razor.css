@@ -9,7 +9,7 @@ main {
 }
 
 .sidebar {
-    background-color: navy;
+    background-image:linear-gradient(0deg,blue , black);
 }
 
 .top-row {

@@ -1,4 +1,5 @@
 @page "/coursesadd"
+@page "/coursesadd/{id:guid}"
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
 @using System.Linq;
@@ -15,7 +16,7 @@
         <input class="form-control border-secondary col-md-3 me-2" type="text" placeholder="Nome" @bind-value="@Name"/>
         <input class="form-control border-secondary col-md-3 me-2" type="text" placeholder="Requerimento" @bind-value="@Requirement"/>
         <input class="form-control border-secondary col-md-2 me-2" type="number" placeholder="Carga horária" @bind-value="@WorkLoad"/>
-        <input class="form-control border-secondary col-md-2 me-2" type="number" placeholder="Preço" @bind-value="@Price"/>
+        <input class="form-control border-secondary col-md-2" type="number" placeholder="Preço" @bind-value="@Price"/>
     </div>
 </div>
 <div>
