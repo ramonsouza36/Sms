@@ -2,10 +2,13 @@
 
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
+@using SchoolManagerSystem.Services;
 @using System.Linq;
 @using Microsoft.EntityFrameworkCore;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager navManager;
+@inject InstructorsService InstructorsService;
+
 <div>
     <a href="instructorsadd" class="btn btn-primary active mb-3 text-center" role="button" data-bs-toggle="button" aria-pressed="true">
         <i class="fas fa-plus"> Adicionar</i>
@@ -54,19 +57,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await GetInstructors();
-    }
-
-    public async Task<List<Instructor>> GetInstructors()
-    {
-        using var context = DbFactory.CreateDbContext();
-        instructor = await context.Instructor.Where(i => i.Id != Guid.Empty).ToListAsync();
-        Console.WriteLine($"{instructor!.FirstOrDefault()!.Name}");
-        return instructor;
+        instructor = await InstructorsService.GetInstructorsAsync(DbFactory);
     }
 
     public void showInstructor(Guid id)
     {
-        navManager.NavigateTo("instructorsadd/{id}");
+        navManager.NavigateTo($"instructorsadd/{id}");
     }
 }
