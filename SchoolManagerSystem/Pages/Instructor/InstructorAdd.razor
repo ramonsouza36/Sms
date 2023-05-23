@@ -2,9 +2,12 @@
 @page "/instructorsadd/{id:guid}"
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
+@using SchoolManagerSystem.Services;
 @using System.Linq;
 @using Microsoft.EntityFrameworkCore;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject NavigationManager navManager;
+@inject InstructorsService InstructorsService;
 
 <PageTitle>Instructors</PageTitle>
 
@@ -35,20 +38,32 @@
     [Parameter]
     public Guid? id { get; set; }
 
+    protected override async Task OnParametersSetAsync()
+    {
+        if(id.HasValue)
+        {
+            var instructor = await InstructorsService.GetInstructorsByIdAsync(DbFactory,id.Value);
+            if(instructor != null)
+            {
+                Name = instructor!.Name!;
+                Email = instructor!.Email!;
+                HourlyCost = instructor.HourlyCost;
+                Certications = instructor!.Certications!;
+            }
+        }
+    }
+
+    
+
     public async Task SetInstructors()
     {
-        using var context = DbFactory.CreateDbContext();
         var instructor = new Instructor();
         instructor.Name = Name;
         instructor.Email = Email;
         instructor.HourlyCost = HourlyCost;
         instructor.Certications = Certications;
-        instructor.Id = Guid.NewGuid();
-        //await context.S
-        if(instructor is not null && instructor.Id != Guid.Empty)
-            context.Instructor.Add(instructor);
-        Console.WriteLine($"{instructor!.Name}");
-        await context.SaveChangesAsync();
+
+        await InstructorsService.SetInstructorAsync(DbFactory, instructor);
     }
 
 }
