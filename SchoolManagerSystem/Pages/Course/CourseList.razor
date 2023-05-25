@@ -2,9 +2,12 @@
 
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
+@using SchoolManagerSystem.Services;
 @using System.Linq;
 @using Microsoft.EntityFrameworkCore;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject NavigationManager navManager;
+@inject CourseService CourseService;
 
 <div>
     <a href="coursesadd" class="btn btn-primary active mb-3 text-center" role="button" data-bs-toggle="button" aria-pressed="true">
@@ -46,14 +49,11 @@ List<Course>? course { get; set;}
 
     protected override async Task OnInitializedAsync()
     {
-        await GetCourses();
+        course = await CourseService.GetCourseAsync(DbFactory);
     }
 
-    public async Task<List<Course>> GetCourses()
+    public void showInstructor(Guid id)
     {
-        using var context = DbFactory.CreateDbContext();
-        course = await context.Course.Where(i => i.Id != Guid.Empty).ToListAsync();
-        Console.WriteLine($"{course!.FirstOrDefault()!.Name}");
-        return course;
+        //navManager.NavigateTo($"coursesadd/{id}");
     }
 }
