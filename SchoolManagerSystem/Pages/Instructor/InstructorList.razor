@@ -33,10 +33,12 @@
                             <td>@item.Name</td>
                             <td>@item.Email</td>
                             <td>
-                                <button title="Editar" class="btn btn-secondary text-light" @onclick="(() => showInstructor(item.Id))">
-                                    <i class="fas fa-pencil"></i>
-                                </button>
-                                <i class="fas fa-pencil "></i>
+                                <a title="Editar" class="btn btn-secondary text-center" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => showInstructor(item.Id))">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a title="Excluir" class="btn btn-danger text-center" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => deleteInstructor(item.Id))">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
                             </td>
                         </tr>
                     }
@@ -59,5 +61,10 @@
     public void showInstructor(Guid id)
     {
         navManager.NavigateTo($"instructorsadd/{id}");
+    }
+    public async Task deleteInstructor(Guid id)
+    {
+        await InstructorsService.DeleteInstructorAsync(DbFactory, id);
+        navManager.NavigateTo($"instructors", true);
     }
 }

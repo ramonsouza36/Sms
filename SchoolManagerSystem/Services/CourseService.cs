@@ -23,5 +23,21 @@ namespace SchoolManagerSystem.Services
             Console.WriteLine($"{course!.Name} from Service");
             await context.SaveChangesAsync();
         }
+
+        public async Task<Course> GetCoursesByIdAsync(IDbContextFactory<ApplicationDbContext> DbFactory, Guid id)
+        {
+            using var context = DbFactory.CreateDbContext();
+            var course = context.Course.Where(i => i.Id == id).FirstOrDefault();
+            return course;
+
+        }
+
+        public async Task DeleteCourseAsync(IDbContextFactory<ApplicationDbContext> DbFactory, Guid id)
+        {
+            using var context = DbFactory.CreateDbContext();
+            var course = await GetCoursesByIdAsync(DbFactory,id);
+            context.Course.Remove(course);
+            await context.SaveChangesAsync();
+        }
     }
 }

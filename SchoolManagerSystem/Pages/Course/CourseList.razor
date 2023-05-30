@@ -32,7 +32,14 @@
                         <tr>
                             <td>@item.Name</td>
                             <td>@item.Price</td>
-                            <td></td>
+                            <td>
+                                <a title="Editar" class="btn btn-secondary text-center" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => showCourse(item.Id))">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a title="Excluir" class="btn btn-danger text-center" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => deleteCourse(item.Id))">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
                         </tr>
                     }
                 }
@@ -52,8 +59,13 @@ List<Course>? course { get; set;}
         course = await CourseService.GetCourseAsync(DbFactory);
     }
 
-    public void showInstructor(Guid id)
+    public void showCourse(Guid id)
     {
-        //navManager.NavigateTo($"coursesadd/{id}");
+        navManager.NavigateTo($"coursesadd/{id}");
+    }
+    public async Task deleteCourse(Guid id)
+    {
+        await CourseService.DeleteCourseAsync(DbFactory, id);
+        navManager.NavigateTo($"courses", true);
     }
 }

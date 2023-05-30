@@ -27,9 +27,17 @@ namespace SchoolManagerSystem.Services
         public async Task<Instructor> GetInstructorsByIdAsync(IDbContextFactory<ApplicationDbContext> DbFactory, Guid id)
         {
             using var context = DbFactory.CreateDbContext();
-            var instructor = context.Instructor.Where(i => i.Id != Guid.Empty).FirstOrDefault();
+            var instructor = context.Instructor.Where(i => i.Id == id).FirstOrDefault();
             return instructor;
 
+        }
+
+        public async Task DeleteInstructorAsync(IDbContextFactory<ApplicationDbContext> DbFactory, Guid id)
+        {
+            using var context = DbFactory.CreateDbContext();
+            var instructor = await GetInstructorsByIdAsync(DbFactory,id);
+            context.Instructor.Remove(instructor);
+            await context.SaveChangesAsync();
         }
     }
 }
