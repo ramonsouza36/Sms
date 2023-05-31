@@ -20,6 +20,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<InstructorsService>();
 builder.Services.AddSingleton<CourseService>();
+builder.Services.AddSingleton<StudentService>();
 
 var app = builder.Build();
 

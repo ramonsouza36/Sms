@@ -1,4 +1,4 @@
-@page "/instructors"
+@page "/students"
 
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
@@ -7,10 +7,10 @@
 @using Microsoft.EntityFrameworkCore;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager navManager;
-@inject InstructorsService InstructorsService;
+@inject StudentService StudentService;
 
 <div>
-    <a href="instructorsadd" class="btn btn-primary active mb-3 text-center" role="button" data-bs-toggle="button" aria-pressed="true">
+    <a href="studentadd" class="btn btn-primary active mb-3 text-center" role="button" data-bs-toggle="button" aria-pressed="true">
         <i class="fas fa-plus"> Adicionar</i>
     </a>
 </div>
@@ -20,23 +20,25 @@
             <thead>
                 <tr>
                     <th>Nome</th>
+                    <th>Documento</th>
                     <th>Email</th>
                     <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
-                @if (instructor is not null)
+                @if (students is not null)
                 {
-                    foreach(var item in instructor)
+                    foreach(var item in students)
                     {
                         <tr>
                             <td>@item.Name</td>
+                            <td>@item.FederalRegistration</td>
                             <td>@item.Email</td>
                             <td>
-                                <a title="Editar" class="btn btn-secondary text-center" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => showInstructor(item.Id))">
+                                <a title="Editar" class="btn btn-secondary text-center" role="button" data-bs-toggle="button" aria-pressed="true">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
-                                <a title="Excluir" class="btn btn-danger text-center" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => deleteInstructor(item.Id))">
+                                <a title="Excluir" class="btn btn-danger text-center" role="button" data-bs-toggle="button" aria-pressed="true">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </td>
@@ -47,23 +49,11 @@
         </table>
     </div>
 </div>
-
-@code{
-    
-    List<Instructor>? instructor { get; set;}
+@code {
+    List<Student>? students { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        instructor = await InstructorsService.GetInstructorsAsync(DbFactory);
-    }
-
-    public void showInstructor(Guid id)
-    {
-        navManager.NavigateTo($"instructorsadd/{id}");
-    }
-    public async Task deleteInstructor(Guid id)
-    {
-        await InstructorsService.DeleteInstructorAsync(DbFactory, id);
-        navManager.NavigateTo($"instructors", true);
+        students = await StudentService.GetStudentsAsync(DbFactory);
     }
 }

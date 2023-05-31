@@ -1,0 +1,71 @@
+@page "/studentadd"
+@page "/studentadd/{id:guid}"
+@using SchoolManagerSystem.Models;
+@using SchoolManagerSystem.Data;
+@using SchoolManagerSystem.Services;
+@using System.Linq;
+@using Microsoft.EntityFrameworkCore;
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject NavigationManager navManager;
+@inject StudentService StudentService;
+
+<PageTitle>Students</PageTitle>
+
+<div class="container-fluid">
+    <h3>Estudantes</h3>
+</div>
+<div class="container-fluid">
+    <div class="row col-md-12 d-md-inline-flex">
+        <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Nome" @bind-value="@Name"/>
+        <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Documento" @bind-value="@FederalRegistration"/>
+        <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Email" @bind-value="@Email"/>
+    </div>
+    <div class="row col-md-12 d-md-inline-flex mt-3">
+        <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Telefone" @bind-value="@PhoneNumber"/>
+        <input class="form-control border-secondary col-md-4 me-2" type="date" @bind-value="@BirthDate"/>
+    </div>
+</div>
+<div>
+    <button type="button" class="btn btn-primary" @onclick = "(() => SetStudent())">Salvar</button>
+    <button type="button" class="btn btn-secondary">Cancelar</button>
+</div>
+
+@code{
+    public string Name = "";
+    public string FederalRegistration = "";
+    public string PhoneNumber = "";
+    public string Email = "";
+    public DateTime BirthDate = DateTime.Now;
+    
+    [Parameter]
+    public Guid? id { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if(id.HasValue)
+        {
+            var student = await StudentService.GetStudentByIdAsync(DbFactory,id.Value);
+            if(student != null)
+            {
+                Name = student!.Name!;
+                Email = student!.Email!;
+                FederalRegistration = student!.FederalRegistration!;
+                PhoneNumber = student!.PhoneNumber!;
+                BirthDate = student!.BirthDate;
+            }
+        }
+    }
+
+    public async Task SetStudent()
+    {
+        var student = new Student();
+        student.Name = Name;
+        student.Email = Email;
+        student.FederalRegistration = FederalRegistration;
+        student.PhoneNumber = PhoneNumber;
+        student.BirthDate = BirthDate;
+
+        await StudentService.SetStudentAsync(DbFactory, student);
+        navManager.NavigateTo($"/students", true);   
+    }
+}

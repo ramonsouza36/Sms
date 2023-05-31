@@ -62,6 +62,7 @@
         instructor.Certications = Certications;
 
         await InstructorsService.SetInstructorAsync(DbFactory, instructor);
+        navManager.NavigateTo($"/courses", true);   
     }
 
 }
