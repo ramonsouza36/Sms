@@ -8,6 +8,7 @@ public class ApplicationDbContext : IdentityDbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
+         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
     public DbSet<SchoolManagerSystem.Models.Course> Course { get; set; }
     public DbSet<SchoolManagerSystem.Models.Instructor> Instructor { get; set; }

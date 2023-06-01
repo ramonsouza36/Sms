@@ -29,5 +29,27 @@ namespace SchoolManagerSystem.Services
                 context.Student.Add(student);
             await context.SaveChangesAsync();
         }
+
+        public async Task DeleteStudentAsync(IDbContextFactory<ApplicationDbContext> DbFactory, Guid id)
+        {
+            using var context = DbFactory.CreateDbContext();
+            var student = await GetStudentByIdAsync(DbFactory,id);
+            context.Student.Remove(student);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateStudentAsync(IDbContextFactory<ApplicationDbContext> DbFactory, Student student)
+        {
+            using var context = DbFactory.CreateDbContext();
+            var studentOld = await GetStudentByIdAsync(DbFactory,student.Id);
+            studentOld.Name = student.Name;
+            studentOld.Email = student.Email;
+            studentOld.FederalRegistration = student.FederalRegistration;
+            studentOld.PhoneNumber = student.PhoneNumber;
+            studentOld.BirthDate = student.BirthDate;
+            
+            context.Student.Update(studentOld);
+            await context.SaveChangesAsync();
+        }
     }
 }

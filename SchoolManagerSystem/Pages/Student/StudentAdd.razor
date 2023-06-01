@@ -64,8 +64,13 @@
         student.FederalRegistration = FederalRegistration;
         student.PhoneNumber = PhoneNumber;
         student.BirthDate = BirthDate;
-
-        await StudentService.SetStudentAsync(DbFactory, student);
+        if(!id.HasValue)
+            await StudentService.SetStudentAsync(DbFactory, student);
+        else
+        {
+            student.Id = id.Value;
+            await StudentService.UpdateStudentAsync(DbFactory, student);
+        }
         navManager.NavigateTo($"/students", true);   
     }
 }
