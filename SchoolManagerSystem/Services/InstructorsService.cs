@@ -20,7 +20,6 @@ namespace SchoolManagerSystem.Services
             instructor.Id = Guid.NewGuid();
             if(instructor is not null && instructor.Id != Guid.Empty)
                 context.Instructor.Add(instructor);
-            Console.WriteLine($"{instructor!.Name}");
             await context.SaveChangesAsync();
         }
 
@@ -37,6 +36,13 @@ namespace SchoolManagerSystem.Services
             using var context = DbFactory.CreateDbContext();
             var instructor = await GetInstructorsByIdAsync(DbFactory,id);
             context.Instructor.Remove(instructor);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateInstructorAsync(IDbContextFactory<ApplicationDbContext> DbFactory, Instructor instructor)
+        {
+            using var context = DbFactory.CreateDbContext();
+            context.Instructor.Update(instructor);
             await context.SaveChangesAsync();
         }
     }

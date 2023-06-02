@@ -61,8 +61,15 @@
         instructor.HourlyCost = HourlyCost;
         instructor.Certications = Certications;
 
-        await InstructorsService.SetInstructorAsync(DbFactory, instructor);
-        navManager.NavigateTo($"/courses", true);   
+        if(!id.HasValue)
+            await InstructorsService.SetInstructorAsync(DbFactory, instructor);
+        else
+        {
+            instructor.Id = id.Value;
+            await InstructorsService.UpdateInstructorAsync(DbFactory, instructor);
+        }
+
+        navManager.NavigateTo($"/instructors", true);   
     }
 
 }

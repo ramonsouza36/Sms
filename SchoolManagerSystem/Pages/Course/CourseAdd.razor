@@ -60,7 +60,13 @@
         course.WorkLoad = WorkLoad;
         course.Price = Price;
 
-        await CourseService.SetCourseAsync(DbFactory,course);
+        if(!id.HasValue)
+            await CourseService.SetCourseAsync(DbFactory,course);
+        else
+        {
+            course.Id = id.Value;
+            await CourseService.UpdateCourseAsync(DbFactory, course);
+        }
         navManager.NavigateTo($"/courses", true);
     }
 

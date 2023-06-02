@@ -10,7 +10,6 @@ namespace SchoolManagerSystem.Services
         {
             using var context = DbFactory.CreateDbContext();
             List<Course> course = await context.Course.Where(i => i.Id != Guid.Empty).ToListAsync();
-            Console.WriteLine($"{course!.FirstOrDefault()!.Name} from service");
             return course;
         }
 
@@ -20,7 +19,6 @@ namespace SchoolManagerSystem.Services
             course.Id = Guid.NewGuid();
             if(course is not null && course.Id != Guid.Empty)
                 context.Course.Add(course);
-            Console.WriteLine($"{course!.Name} from Service");
             await context.SaveChangesAsync();
         }
 
@@ -29,7 +27,6 @@ namespace SchoolManagerSystem.Services
             using var context = DbFactory.CreateDbContext();
             var course = context.Course.Where(i => i.Id == id).FirstOrDefault();
             return course;
-
         }
 
         public async Task DeleteCourseAsync(IDbContextFactory<ApplicationDbContext> DbFactory, Guid id)
@@ -37,6 +34,13 @@ namespace SchoolManagerSystem.Services
             using var context = DbFactory.CreateDbContext();
             var course = await GetCoursesByIdAsync(DbFactory,id);
             context.Course.Remove(course);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateCourseAsync(IDbContextFactory<ApplicationDbContext> DbFactory, Course course)
+        {
+            using var context = DbFactory.CreateDbContext();
+            context.Course.Update(course);
             await context.SaveChangesAsync();
         }
     }
