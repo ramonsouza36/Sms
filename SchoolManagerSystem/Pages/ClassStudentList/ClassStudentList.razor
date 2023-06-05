@@ -1,4 +1,4 @@
-@page "/courses"
+@page "/classStudent"
 
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
@@ -7,10 +7,10 @@
 @using Microsoft.EntityFrameworkCore;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager navManager;
-@inject CourseService CourseService;
+@inject ClassStudentService ClassStudentService;
 
 <div>
-    <a href="coursesadd" class="btn btn-primary active mb-3 text-center" role="button" data-bs-toggle="button" aria-pressed="true">
+    <a href="classStudentadd" class="btn btn-primary active mb-3 text-center" role="button" data-bs-toggle="button" aria-pressed="true">
         <i class="fas fa-plus"> Adicionar</i>
     </a>
 </div>
@@ -19,19 +19,21 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
+                    <th>Curso</th>
+                    <th>Professor</th>
+                    <th>Carga horária</th>
                     <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
-                @if (course is not null)
+                @if (classStudents is not null)
                 {
-                    foreach(var item in course)
+                    foreach(var item in classStudents)
                     {
                         <tr>
-                            <td>@item.Name</td>
-                            <td>@item.Price</td>
+                            <td>@item.CourseId</td>
+                            <td>@item.InstructorId</td>
+                            <td>@item.WorkLoad</td>
                             <td class="text-right float-right">
                                 <a title="Editar" class="btn btn-secondary text-right float-right" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => showCourse(item.Id))">
                                     <i class="fas fa-pencil-alt"></i>
@@ -49,21 +51,21 @@
 </div>
 
 @code{
-List<Course>? course { get; set;}
-
-
+    List<ClassStudent>? classStudents { get; set;}
+    
     protected override async Task OnInitializedAsync()
     {
-        course = await CourseService.GetCourseAsync(DbFactory);
+        classStudents = await ClassStudentService.GetClassStudentAsync(DbFactory);
     }
 
     public void showCourse(Guid id)
     {
-        navManager.NavigateTo($"coursesadd/{id}");
+        navManager.NavigateTo($"classStudentadd/{id}");
     }
     public async Task deleteCourse(Guid id)
     {
-        await CourseService.DeleteCourseAsync(DbFactory, id);
-        navManager.NavigateTo($"courses", true);
+        await ClassStudentService.DeleteClassStudentAsync(DbFactory, id);
+        navManager.NavigateTo($"classStudent", true);
     }
+
 }

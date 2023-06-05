@@ -1,0 +1,68 @@
+@page "/classStudentadd"
+@page "/classStudentadd/{id:guid}"
+@using SchoolManagerSystem.Models;
+@using SchoolManagerSystem.Data;
+@using SchoolManagerSystem.Services;
+@using System.Linq;
+@using Microsoft.EntityFrameworkCore;
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject ClassStudentService ClassStudentService;
+@inject NavigationManager navManager;
+
+<PageTitle>Course</PageTitle>
+
+<div class="container-fluid">
+    <h3>Cursos</h3>
+</div>
+<div class="container-fluid">
+    <div class="row col-md-12 d-md-inline-flex">
+        <input class="form-control border-secondary col-md-3 me-2" type="text" placeholder="Nome Curso" @bind-value="@NameCourse"/>
+        <input class="form-control border-secondary col-md-3 me-2" type="text" placeholder="Nome Professor" @bind-value="@NameInstr"/>
+        <input class="form-control border-secondary col-md-2 me-2" type="number" placeholder="Carga horária" @bind-value="@WorkLoad"/>
+    </div>
+</div>
+<div>
+    <button type="button" class="btn btn-primary" @onclick = "(() => SetCourse())">Salvar</button>
+    <button type="button" class="btn btn-secondary">Cancelar</button>
+</div>
+
+@code{
+    public Guid NameCourse = Guid.Empty;
+    public Guid NameInstr = Guid.Empty;
+    public int WorkLoad = 0;
+
+    [Parameter]
+    public Guid? id { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if(id.HasValue)
+        {
+            var classStudent = await ClassStudentService.GetClassStudentByIdAsync(DbFactory,id.Value);
+            if(classStudent != null)
+            {
+                NameCourse = classStudent!.CourseId!;
+                NameInstr = classStudent!.InstructorId!;
+                WorkLoad = classStudent!.WorkLoad!;
+            }
+        }
+    }
+
+    public async Task SetCourse()
+    {
+        using var context = DbFactory.CreateDbContext();
+        var classStudent = new ClassStudent();
+        classStudent.CourseId = NameCourse;
+        classStudent.InstructorId = NameInstr;
+        classStudent.WorkLoad = WorkLoad;
+        
+        if(!id.HasValue)
+            await ClassStudentService.SetClassStudentAsync(DbFactory,classStudent);
+        else
+        {
+            classStudent.Id = id.Value;
+            await ClassStudentService.UpdateClassStudentAsync(DbFactory, classStudent);
+        }
+        navManager.NavigateTo($"/classStudent", true);
+    }
+}
