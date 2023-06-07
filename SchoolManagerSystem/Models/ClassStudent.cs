@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace SchoolManagerSystem.Models;
 
 public class ClassStudent
@@ -15,6 +17,12 @@ public class ClassStudent
     public DateTime? EndDate { get; set; } = DateTime.Now;
 
     public int WorkLoad {get; set; } = 0;
+
+    [NotMapped]
+    public string NameInstr { get; set; }
+
+    [NotMapped]
+    public string NameCourse { get; set; }
 
     #endregion Properties
 }

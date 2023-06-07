@@ -27,8 +27,8 @@
 </div>
 
 @code{
-    public Guid NameCourse = Guid.Empty;
-    public Guid NameInstr = Guid.Empty;
+    public string NameCourse = string.Empty;
+    public string NameInstr = string.Empty;
     public int WorkLoad = 0;
 
     [Parameter]
@@ -41,8 +41,8 @@
             var classStudent = await ClassStudentService.GetClassStudentByIdAsync(DbFactory,id.Value);
             if(classStudent != null)
             {
-                NameCourse = classStudent!.CourseId!;
-                NameInstr = classStudent!.InstructorId!;
+                NameCourse = classStudent.NameCourse;
+                NameInstr = classStudent.NameInstr;
                 WorkLoad = classStudent!.WorkLoad!;
             }
         }
@@ -52,8 +52,8 @@
     {
         using var context = DbFactory.CreateDbContext();
         var classStudent = new ClassStudent();
-        classStudent.CourseId = NameCourse;
-        classStudent.InstructorId = NameInstr;
+        classStudent.NameCourse = NameCourse;
+        classStudent.NameInstr = NameInstr;
         classStudent.WorkLoad = WorkLoad;
         
         if(!id.HasValue)

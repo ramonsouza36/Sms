@@ -31,8 +31,8 @@
                     foreach(var item in classStudents)
                     {
                         <tr>
-                            <td>@item.CourseId</td>
-                            <td>@item.InstructorId</td>
+                            <td>@item.NameCourse</td>
+                            <td>@item.NameInstr</td>
                             <td>@item.WorkLoad</td>
                             <td class="text-right float-right">
                                 <a title="Editar" class="btn btn-secondary text-right float-right" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => showCourse(item.Id))">
