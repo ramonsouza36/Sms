@@ -7,18 +7,38 @@
 @using Microsoft.EntityFrameworkCore;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject ClassStudentService ClassStudentService;
+@inject CourseService CourseService;
+@inject InstructorsService InstructorsService;
 @inject NavigationManager navManager;
 
 <PageTitle>Course</PageTitle>
 
 <div class="container-fluid">
-    <h3>Cursos</h3>
+    <h3>Turma</h3>
 </div>
-<div class="container-fluid">
+<div class="container-fluid mb-3">
     <div class="row col-md-12 d-md-inline-flex">
-        <input class="form-control border-secondary col-md-3 me-2" type="text" placeholder="Nome Curso" @bind-value="@NameCourse"/>
-        <input class="form-control border-secondary col-md-3 me-2" type="text" placeholder="Nome Professor" @bind-value="@NameInstr"/>
-        <input class="form-control border-secondary col-md-2 me-2" type="number" placeholder="Carga horária" @bind-value="@WorkLoad"/>
+        <select class="col-md-4 me-2" type="text" placeholder="Nome Curso" @bind = "CourseId">
+            <option value="">Selecione o curso....</option>
+            @if(course != null)
+            {
+                foreach(var item in course!)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            }
+        </select>
+        <select class="col-md-4 me-2" type="text" placeholder="Nome Curso" @bind = "InstructorId" >
+            <option value="">Selecione o professor....</option>
+            @if(instructors != null)
+            {
+                foreach(var item in instructors!)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            }
+        </select>
+        <input class="form-control border-secondary col-md-4 me-2" type="number" placeholder="Carga horária" @bind-value="@WorkLoad"/>
     </div>
 </div>
 <div>
@@ -27,22 +47,26 @@
 </div>
 
 @code{
-    public string NameCourse = string.Empty;
-    public string NameInstr = string.Empty;
+    public Guid CourseId = Guid.Empty;
+    public Guid InstructorId = Guid.Empty;
     public int WorkLoad = 0;
+    public List<Course>? course { get; set; }
+    public List<Instructor>? instructors { get; set; }
 
     [Parameter]
     public Guid? id { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
+        course = await CourseService.GetCourseAsync(DbFactory);
+        instructors = await InstructorsService.GetInstructorsAsync(DbFactory);
         if(id.HasValue)
         {
             var classStudent = await ClassStudentService.GetClassStudentByIdAsync(DbFactory,id.Value);
             if(classStudent != null)
             {
-                NameCourse = classStudent.NameCourse;
-                NameInstr = classStudent.NameInstr;
+                CourseId = classStudent.CourseId;
+                InstructorId = classStudent.InstructorId;
                 WorkLoad = classStudent!.WorkLoad!;
             }
         }
@@ -52,8 +76,8 @@
     {
         using var context = DbFactory.CreateDbContext();
         var classStudent = new ClassStudent();
-        classStudent.NameCourse = NameCourse;
-        classStudent.NameInstr = NameInstr;
+        classStudent.CourseId = CourseId;
+        classStudent.InstructorId = InstructorId;
         classStudent.WorkLoad = WorkLoad;
         
         if(!id.HasValue)

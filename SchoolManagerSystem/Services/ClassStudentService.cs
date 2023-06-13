@@ -41,10 +41,10 @@ namespace SchoolManagerSystem.Services
         {
             using var context = DbFactory.CreateDbContext();
             classStudent.Id = Guid.NewGuid();
-            var instructor = context.Instructor.Where(i => i.Name == classStudent.NameInstr).FirstOrDefault();
-            var course = context.Course.Where(i => i.Name == classStudent.NameCourse).FirstOrDefault();
-            classStudent.InstructorId = instructor!.Id;
-            classStudent.CourseId = course!.Id!;
+            var instructor = context.Instructor.Where(i => i.Id == classStudent.InstructorId).FirstOrDefault();
+            var course = context.Course.Where(i => i.Id == classStudent.CourseId).FirstOrDefault();
+            classStudent.NameInstr = instructor!.Name!;
+            classStudent.NameCourse = course!.Name!;
             if(classStudent is not null && classStudent.Id != Guid.Empty)
                 context.ClassStudent.Add(classStudent);
             await context.SaveChangesAsync();
