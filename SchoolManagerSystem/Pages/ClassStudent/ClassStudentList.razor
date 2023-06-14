@@ -22,7 +22,11 @@
                     <th>Curso</th>
                     <th>Professor</th>
                     <th>Carga horária</th>
-                    <th>Opções</th>
+                    <th>
+                        <div class="divBotoes">
+                            Opções
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -34,13 +38,15 @@
                             <td>@item.NameCourse</td>
                             <td>@item.NameInstr</td>
                             <td>@item.WorkLoad</td>
-                            <td class="text-right float-right">
-                                <a title="Editar" class="btn btn-secondary text-right float-right" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => showCourse(item.Id))">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <a title="Excluir" class="btn btn-danger text-right float-right" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => deleteCourse(item.Id))">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
+                            <td>
+                                <div class="divBotoes">
+                                    <a title="Editar" class="btn btn-secondary" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => showCourse(item.Id))">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a title="Excluir" class="btn btn-danger" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => deleteCourse(item.Id))">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     }

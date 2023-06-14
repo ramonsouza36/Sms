@@ -22,7 +22,11 @@
                     <th>Nome</th>
                     <th>Documento</th>
                     <th>Email</th>
-                    <th>Opções</th>
+                    <th>
+                        <div class="divBotoes">
+                            Opções
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -35,12 +39,14 @@
                             <td>@item.FederalRegistration</td>
                             <td>@item.Email</td>
                             <td>
-                                <a title="Editar" class="btn btn-secondary text-center" role="button" data-bs-toggle="button" @onclick="(() => showStudent(item.Id))" aria-pressed="true">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <a title="Excluir" class="btn btn-danger text-center" role="button" data-bs-toggle="button" @onclick="(() => deleteStudent(item.Id))" aria-pressed="true">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
+                                <div class="divBotoes">
+                                    <a title="Editar" class="btn btn-secondary text-center" role="button" data-bs-toggle="button" @onclick="(() => showStudent(item.Id))" aria-pressed="true">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a title="Excluir" class="btn btn-danger text-center" role="button" data-bs-toggle="button" @onclick="(() => deleteStudent(item.Id))" aria-pressed="true">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     }
