@@ -1,0 +1,24 @@
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div class="@ClassToast @Status" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <span>Bootstrap</span>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
+                <i class="fas fa-close"></i>
+            </button>
+        </div>
+        <div class="toast-body">
+            @Message
+        </div>
+  </div>
+</div>
+
+@code{
+    [Parameter]
+    public string ClassToast { get; set; } = "toast hide";
+
+    [Parameter]
+    public string Message { get; set; } = "";
+
+    [Parameter]
+    public string Status { get; set; } = "";
+}
