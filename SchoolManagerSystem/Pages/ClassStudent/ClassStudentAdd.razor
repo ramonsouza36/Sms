@@ -10,6 +10,7 @@
 @inject CourseService CourseService;
 @inject InstructorsService InstructorsService;
 @inject NavigationManager navManager;
+@using SchoolManagerSystem.Pages.Components
 
 <PageTitle>Course</PageTitle>
 
@@ -40,21 +41,34 @@
         </select>
         <input class="form-control border-secondary col-md-4 me-2" type="number" placeholder="Carga horária" @bind-value="@WorkLoad"/>
     </div>
+    <div class="row col-md-12 mt-3 d-md-inline-flex">
+        <div class="col-md-4 me-2">
+            <input type="date" class="form-control" placeholder="Data início">
+        </div>
+        <div class="col-md-4 me-2">
+            <input type="date" class="form-control" placeholder="Data término">
+        </div>
+    </div>
 </div>
 <div>
     <button type="button" class="btn btn-primary" @onclick = "(() => SetCourse())">Salvar</button>
     <button type="button" class="btn btn-secondary">Cancelar</button>
 </div>
 
+<Toast ClassToast="@ClassToast" Message="@Message" Status="@Status"/>
+            
+
 @code{
+    [Parameter]
+    public Guid? id { get; set; }
     public Guid CourseId = Guid.Empty;
     public Guid InstructorId = Guid.Empty;
     public int WorkLoad = 0;
     public List<Course>? course { get; set; }
     public List<Instructor>? instructors { get; set; }
-
-    [Parameter]
-    public Guid? id { get; set; }
+    public string ClassToast { get; set; } = "toast hide";
+    public string Message = string.Empty;
+    public string Status = string.Empty;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -87,6 +101,20 @@
             classStudent.Id = id.Value;
             await ClassStudentService.UpdateClassStudentAsync(DbFactory, classStudent);
         }
-        navManager.NavigateTo($"/classStudent", true);
+
+        var message = "Cadastro realizado com sucesso!";
+        var status = "bg-success text-white";
+        await ShowToast(message, status);
+        //navManager.NavigateTo($"/classStudent", true);
+    }
+
+    public async Task ShowToast(string message, string status)
+    {
+        Message = message;
+        Status = status;
+        ClassToast = "toast show";
+        await Task.Delay(3000);
+        ClassToast = "toast hide";
+        StateHasChanged();
     }
 }

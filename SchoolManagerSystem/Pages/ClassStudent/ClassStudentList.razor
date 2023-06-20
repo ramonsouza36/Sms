@@ -2,9 +2,7 @@
 
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
-@using SchoolManagerSystem.Pages.Components
 @using SchoolManagerSystem.Services;
-@using System.Linq;
 @using Microsoft.EntityFrameworkCore;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager navManager;
@@ -54,17 +52,12 @@
                 }
             </tbody>
         </table>
-        <div>
-            <Toast ClassToast="@ClassToast" Message="Teste de mensagem" Status="bg-danger text-white"/>
-            <button type="button" class="btn btn-primary" @onclick="(() => ShowToast())">Show live toast</button>
-        </div>
     </div>
 </div>
 
 @code{
     List<ClassStudent>? classStudents { get; set;}
     
-    public string ClassToast { get; set; } = "toast hide";
     protected override async Task OnInitializedAsync()
     {
         classStudents = await ClassStudentService.GetClassStudentAsync(DbFactory);
@@ -79,13 +72,4 @@
         await ClassStudentService.DeleteClassStudentAsync(DbFactory, id);
         navManager.NavigateTo($"classStudent", true);
     }
-
-    public async void ShowToast()
-    {
-        ClassToast = "toast show";
-        await Task.Delay(3000);
-        ClassToast = "toast hide";
-        StateHasChanged();
-    }
-
 }
