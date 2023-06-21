@@ -1,0 +1,75 @@
+@page "/plateadd"
+@using SchoolManagerSystem.Data;
+@using SchoolManagerSystem.Services;
+@using SchoolManagerSystem.Models;
+@using System.Linq;
+@using Microsoft.EntityFrameworkCore;
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject ClassStudentService ClassStudentService;
+@inject StudentService StudentService;
+@inject NavigationManager navManager;
+@using SchoolManagerSystem.Pages.Components
+
+<PageTitle>Course</PageTitle>
+
+<div class="container-fluid">
+    <h3>Matrícula</h3>
+</div>
+<div class="container-fluid mb-3">
+    <div class="row col-md-12 d-md-inline-flex">
+        <div class="col-md-4">
+            <select class="form-select col-4 me-2 w-0" type="text" placeholder="Nome Curso" @bind = "CourseId">
+                <option value="@Guid.Empty">Selecione o curso....</option>
+                @if(classStudents != null)
+                {
+                    foreach(var item in classStudents!)
+                    {
+                        <option value="@item.Id">@item.NameCourse</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select col-4 me-2 w-0" type="text" placeholder="Nome Curso" @bind = "StudentId" >
+                <option value="">Selecione o aluno....</option>
+                
+                @if(students != null)
+                {
+                    foreach(var item in students!)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <input type="date" class="form-control mt-0" placeholder="Data Matrícula">
+        </div>
+    </div>
+</div>
+<div>
+    <button type="button" class="btn btn-primary">Salvar</button>
+    <button type="button" class="btn btn-secondary">Cancelar</button>
+</div>
+
+<Toast ClassToast="@ClassToast" Message="@Message" Status="@Status"/>
+            
+@*/*onclick = "(() => SetCourse())*/*@
+@code{
+    /*[Parameter]
+    public Guid? id { get; set; }*/
+    public Guid CourseId = Guid.Empty;
+    public Guid StudentId = Guid.Empty;
+    public DateTime PlateDate = DateTime.Now;
+    public List<Student>? students { get; set; }
+    public List<ClassStudent>? classStudents { get; set; }
+    public string ClassToast { get; set; } = "toast hide";
+    public string Message = string.Empty;
+    public string Status = string.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        classStudents = await ClassStudentService.GetClassStudentAsync(DbFactory);
+        students = await StudentService.GetStudentsAsync(DbFactory);
+    }
+}
