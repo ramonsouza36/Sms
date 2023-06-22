@@ -7,10 +7,11 @@
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject ClassStudentService ClassStudentService;
 @inject StudentService StudentService;
+@inject PlateService PlateService;
 @inject NavigationManager navManager;
 @using SchoolManagerSystem.Pages.Components
 
-<PageTitle>Course</PageTitle>
+<PageTitle>Plate</PageTitle>
 
 <div class="container-fluid">
     <h3>Matrícula</h3>
@@ -48,7 +49,7 @@
     </div>
 </div>
 <div>
-    <button type="button" class="btn btn-primary">Salvar</button>
+    <button type="button" class="btn btn-primary" @onclick="(() => SetPlate())">Salvar</button>
     <button type="button" class="btn btn-secondary">Cancelar</button>
 </div>
 
@@ -71,5 +72,15 @@
     {
         classStudents = await ClassStudentService.GetClassStudentAsync(DbFactory);
         students = await StudentService.GetStudentsAsync(DbFactory);
+    }
+
+    private async Task SetPlate()
+    {
+        Plate plate = new Plate();
+        plate.ClassStudentId = CourseId;
+        plate.StudentId = StudentId;
+        plate.PlateDate = PlateDate;
+        await PlateService.SetPlateAsync(DbFactory, plate);
+        navManager.NavigateTo($"/plates", true);  
     }
 }
