@@ -1,4 +1,5 @@
 @page "/plateadd"
+@page "/plateadd/{id:guid}"
 @using SchoolManagerSystem.Data;
 @using SchoolManagerSystem.Services;
 @using SchoolManagerSystem.Models;
@@ -44,7 +45,7 @@
             </select>
         </div>
         <div class="col-md-4">
-            <input type="date" class="form-control mt-0" placeholder="Data Matrícula">
+            <input type="date" class="form-control mt-0" placeholder="Data Matrícula" @bind = "PlateDate"> 
         </div>
     </div>
 </div>
@@ -55,10 +56,9 @@
 
 <Toast ClassToast="@ClassToast" Message="@Message" Status="@Status"/>
             
-@*/*onclick = "(() => SetCourse())*/*@
 @code{
-    /*[Parameter]
-    public Guid? id { get; set; }*/
+    [Parameter]
+    public Guid? id { get; set; }
     public Guid CourseId = Guid.Empty;
     public Guid StudentId = Guid.Empty;
     public DateTime PlateDate = DateTime.Now;
@@ -72,6 +72,16 @@
     {
         classStudents = await ClassStudentService.GetClassStudentAsync(DbFactory);
         students = await StudentService.GetStudentsAsync(DbFactory);
+        if(id.HasValue)
+        {
+            var plate = await PlateService.GetPlateByIdAsync(DbFactory,id.Value);
+            if(plate != null)
+            {
+                CourseId = plate.ClassStudentId;
+                StudentId = plate.StudentId;
+                PlateDate = plate.PlateDate;
+            }
+        }
     }
 
     private async Task SetPlate()
@@ -80,7 +90,15 @@
         plate.ClassStudentId = CourseId;
         plate.StudentId = StudentId;
         plate.PlateDate = PlateDate;
-        await PlateService.SetPlateAsync(DbFactory, plate);
+        if(id.HasValue)
+        {
+            plate.Id = id.Value;
+            await PlateService.UpdatePlateAsync(DbFactory, plate);
+        }   
+            
+        else
+            await PlateService.SetPlateAsync(DbFactory, plate);
+            
         navManager.NavigateTo($"/plates", true);  
     }
 }

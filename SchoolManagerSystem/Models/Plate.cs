@@ -12,7 +12,7 @@ public class Plate
 
     public Guid StudentId { get; set; }
 
-    public DateTime? PlateDate { get; set; } = DateTime.Now;
+    public DateTime PlateDate { get; set; } = DateTime.Now;
 
     [NotMapped]
     public string NameStudent { get; set; }

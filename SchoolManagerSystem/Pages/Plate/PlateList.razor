@@ -40,10 +40,10 @@
                             <td>@item.PlateDate</td>
                             <td>
                                 <div class="divBotoes">
-                                    <a title="Editar" class="btn btn-secondary text-center" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => showInstructor(item.Id))">
+                                    <a title="Editar" class="btn btn-secondary text-center" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => showPlate(item.Id))">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <a title="Excluir" class="btn btn-danger text-center" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => deleteInstructor(item.Id))">
+                                    <a title="Excluir" class="btn btn-danger text-center" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => deletePlate(item.Id))">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </div>
@@ -59,19 +59,22 @@
 @code{
     
     List<Plate>? plate { get; set;}
+    
+    [Parameter]
+    public Guid? id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         plate = await PlateService.GetPlateAsync(DbFactory);
     }
 
-    public void showInstructor(Guid id)
+    public void showPlate(Guid id)
     {
-        //navManager.NavigateTo($"instructorsadd/{id}");
+        navManager.NavigateTo($"plateadd/{id}");
     }
-    public async Task deleteInstructor(Guid id)
+    public async Task deletePlate(Guid id)
     {
-        //await InstructorsService.DeleteInstructorAsync(DbFactory, id);
-        navManager.NavigateTo($"instructors", true);
+        await PlateService.DeleteClassStudentAsync(DbFactory, id);
+        navManager.NavigateTo($"plates", true);
     }
 }

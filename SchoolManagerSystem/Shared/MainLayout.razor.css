@@ -10,6 +10,7 @@ main {
 
 .sidebar {
     background-image:linear-gradient(0deg,blue , black);
+    width: 200px !important;
 }
 
 .top-row {
