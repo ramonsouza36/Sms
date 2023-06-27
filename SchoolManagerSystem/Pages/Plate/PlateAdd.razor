@@ -18,8 +18,9 @@
     <h3>Matrícula</h3>
 </div>
 <div class="container-fluid mb-3">
-    <div class="row col-md-12 d-md-inline-flex">
+    <div class="row col-md-12">
         <div class="col-md-4">
+            <label class="label">Nome do curso</label>
             <select class="form-select col-4 me-2 w-0" type="text" placeholder="Nome Curso" @bind = "CourseId">
                 <option value="@Guid.Empty">Selecione o curso....</option>
                 @if(classStudents != null)
@@ -32,7 +33,8 @@
             </select>
         </div>
         <div class="col-md-4">
-            <select class="form-select col-4 me-2 w-0" type="text" placeholder="Nome Curso" @bind = "StudentId" >
+            <label class="label">Nome do aluno</label>
+            <select class="form-select col-4 me-2 w-0" type="text" placeholder="Nome Aluno" @bind = "StudentId" >
                 <option value="">Selecione o aluno....</option>
                 
                 @if(students != null)
@@ -45,13 +47,14 @@
             </select>
         </div>
         <div class="col-md-4">
+            <label class="label">Data matrícula</label>
             <input type="date" class="form-control mt-0" placeholder="Data Matrícula" @bind = "PlateDate"> 
         </div>
     </div>
-</div>
-<div>
-    <button type="button" class="btn btn-primary" @onclick="(() => SetPlate())">Salvar</button>
-    <button type="button" class="btn btn-secondary">Cancelar</button>
+    <div class="mt-3">
+        <button type="button" class="btn btn-primary" @onclick="(() => SetPlate())">Salvar</button>
+        <button type="button" class="btn btn-secondary">Cancelar</button>
+    </div>
 </div>
 
 <Toast ClassToast="@ClassToast" Message="@Message" Status="@Status"/>

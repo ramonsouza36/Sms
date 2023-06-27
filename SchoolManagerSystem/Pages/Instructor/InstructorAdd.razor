@@ -16,17 +16,27 @@
 </div>
 <div class="container-fluid">
     <div class="row col-md-12 d-md-inline-flex">
-        <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Nome" @bind-value="@Name"/>
-        <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Email" @bind-value="@Email"/>
-        <input class="form-control border-secondary col-md-4 me-2" type="number" placeholder="Carga horária" @bind-value="@HourlyCost"/>
+        <div class="col-md-3 me-2">
+            <label class="label">Nome do professor</label>
+            <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Nome" @bind-value="@Name"/>
+        </div>
+        <div class="col-md-3 me-2">
+            <label class="label">Email</label>
+            <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Email" @bind-value="@Email"/>
+        </div>
+        <div class="col-md-3 me-2">
+            <label class="label">Valor da hora</label>
+            <input class="form-control border-secondary col-md-4 me-2" type="number" placeholder="Valor hora" @bind-value="@HourlyCost"/>
+        </div>
     </div>
     <div class="row mt-3">
+        <label class="label">Qualificações</label>
         <textarea class="mb-5 lh-md" rows = "5" placeholder="Certificações" @bind="@Certications"></textarea>
     </div>
-</div>
-<div>
-    <button type="button" class="btn btn-primary" @onclick = "(() => SetInstructors())">Salvar</button>
-    <button type="button" class="btn btn-secondary">Cancelar</button>
+    <div class="mt-3">
+        <button type="button" class="btn btn-primary" @onclick = "(() => SetInstructors())">Salvar</button>
+        <button type="button" class="btn btn-secondary">Cancelar</button>
+    </div>
 </div>
 
 @code{

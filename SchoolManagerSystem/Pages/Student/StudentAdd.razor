@@ -16,18 +16,33 @@
 </div>
 <div class="container-fluid">
     <div class="row col-md-12 d-md-inline-flex">
-        <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Nome" @bind-value="@Name"/>
-        <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Documento" @bind-value="@FederalRegistration"/>
-        <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Email" @bind-value="@Email"/>
+        <div class="col-md-3 me-2">
+            <label class="label">Nome do aluno</label>
+            <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Nome" @bind-value="@Name"/>
+        </div>
+        <div class="col-md-3 me-2">
+            <label class="label">Documento</label>
+            <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Documento" @bind-value="@FederalRegistration"/>
+        </div>
+        <div class="col-md-3 me-2">
+            <label class="label">Email</label>
+            <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Email" @bind-value="@Email"/>
+        </div>
     </div>
     <div class="row col-md-12 d-md-inline-flex mt-3">
-        <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Telefone" @bind-value="@PhoneNumber"/>
-        <input class="form-control border-secondary col-md-4 me-2" type="date" @bind-value="@BirthDate"/>
+        <div class="col-md-3 me-2">
+            <label class="label">Telefone</label>
+            <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Telefone" @bind-value="@PhoneNumber"/>
+        </div>
+        <div class="col-md-3 me-2">
+            <label class="label">Data de nascimento</label>
+            <input class="form-control border-secondary col-md-4 me-2" type="date" @bind-value="@BirthDate"/>
+        </div>
     </div>
-</div>
-<div>
-    <button type="button" class="btn btn-primary" @onclick = "(() => SetStudent())">Salvar</button>
-    <button type="button" class="btn btn-secondary">Cancelar</button>
+    <div class="mt-3">
+        <button type="button" class="btn btn-primary" @onclick = "(() => SetStudent())">Salvar</button>
+        <button type="button" class="btn btn-secondary">Cancelar</button>
+    </div>
 </div>
 
 @code{

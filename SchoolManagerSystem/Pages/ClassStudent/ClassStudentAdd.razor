@@ -19,40 +19,51 @@
 </div>
 <div class="container-fluid mb-3">
     <div class="row col-md-12 d-md-inline-flex">
-        <select class="col-md-4 me-2" type="text" placeholder="Nome Curso" @bind = "CourseId">
-            <option value="">Selecione o curso....</option>
-            @if(course != null)
-            {
-                foreach(var item in course!)
+        <div class="col-md-4">
+            <label class="label">Nome do curso</label>
+            <select class="form-select col-md-4 me-2" type="text" placeholder="Nome Curso" @bind = "CourseId">
+                <option value="">Selecione o curso....</option>
+                @if(course != null)
                 {
-                    <option value="@item.Id">@item.Name</option>
+                    foreach(var item in course!)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
                 }
-            }
-        </select>
-        <select class="col-md-4 me-2" type="text" placeholder="Nome Curso" @bind = "InstructorId" >
-            <option value="">Selecione o professor....</option>
-            @if(instructors != null)
-            {
-                foreach(var item in instructors!)
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="label">Nome do professor</label>
+            <select class="form-select col-md-4 me-2" type="text" placeholder="Nome Curso" @bind = "InstructorId" >
+                <option value="">Selecione o professor....</option>
+                @if(instructors != null)
                 {
-                    <option value="@item.Id">@item.Name</option>
+                    foreach(var item in instructors!)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
                 }
-            }
-        </select>
-        <input class="form-control border-secondary col-md-4 me-2" type="number" placeholder="Carga horária" @bind-value="@WorkLoad"/>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="label">Carga horária</label>
+            <input class="form-control border-secondary col-md-4 me-2" type="number" placeholder="Carga horária" @bind-value="@WorkLoad"/>
+        </div>
     </div>
     <div class="row col-md-12 mt-3 d-md-inline-flex">
-        <div class="col-md-4 me-2">
+        <div class="col-md-6">
+            <label class="label">Data de início</label>
             <input type="date" class="form-control" placeholder="Data início">
         </div>
-        <div class="col-md-4 me-2">
+        <div class="col-md-6">
+            <label class="label">Data de término</label>
             <input type="date" class="form-control" placeholder="Data término">
         </div>
     </div>
-</div>
-<div>
-    <button type="button" class="btn btn-primary" @onclick = "(() => SetCourse())">Salvar</button>
-    <button type="button" class="btn btn-secondary">Cancelar</button>
+    <div class="mt-3">
+        <button type="button" class="btn btn-primary" @onclick = "(() => SetCourse())">Salvar</button>
+        <button type="button" class="btn btn-secondary">Cancelar</button>
+    </div>
 </div>
 
 <Toast ClassToast="@ClassToast" Message="@Message" Status="@Status"/>

@@ -106,4 +106,9 @@ input{
 .divBotoes{
     float: right;
 }
+.label{
+    display: grid;
+   font-size: large;
+   margin-top: 3px;
+}
 
