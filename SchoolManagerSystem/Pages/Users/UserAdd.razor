@@ -1,0 +1,104 @@
+@page "/useradd"
+@page "/useradd/{id:guid}"
+@using SchoolManagerSystem.Models;
+@using SchoolManagerSystem.Data;
+@using SchoolManagerSystem.Services;
+@using System.Linq;
+@using Microsoft.EntityFrameworkCore;
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject NavigationManager navManager;
+@inject StudentService StudentService;
+
+<PageTitle>Users</PageTitle>
+
+<div class="container-fluid">
+    <h3>Usuários</h3>
+</div>
+<div class="container-fluid">
+    <div class="row col-md-12 d-md-inline-flex">
+        <div class="col-md-3 me-2">
+            <label class="label">Nome do usuário</label>
+            <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Nome usuário" @bind-value="@UserName"/>
+        </div>
+        <div class="col-md-3 me-2">
+            <label class="label">Senha</label>
+            <div class="input-group align-items-center">
+                <input type="@Type" class="form-control" placeholder="Senha"/>
+                <button class="btn btn-secondary text-white" @onclick="(() => changeType())"><i class="@Class"></i></button>
+            </div>        </div>
+        <div class="col-md-3 me-2">
+            <label class="label">Confirmar senha</label>
+            <input class="form-control border-secondary col-md-4 me-2" type="@Type" placeholder="Confirmar senha" @bind-value="@PasswordConfirmation"/>
+        </div>
+    </div>
+    <div class="row col-md-12 d-md-inline-flex mt-3">
+        <div class="col-md-3 me-2">
+            <label class="label">Email</label>
+            <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Telefone" @bind-value="@Email"/>
+        </div>
+    </div>
+    <div class="mt-3">
+        <button type="button" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-secondary">Cancelar</button>
+    </div>
+</div>
+
+@code{
+    public string UserName = "";
+    public string Password = "";
+    public string PasswordConfirmation = "";
+    public string Email = "";
+    public string Type = "password";
+    public string Class = "fas fa-eye";
+    [Parameter]
+    public Guid? id { get; set; }
+
+    /*protected override async Task OnParametersSetAsync()
+    {
+        if(id.HasValue)
+        {
+            var student = await StudentService.GetStudentByIdAsync(DbFactory,id.Value);
+            if(student != null)
+            {
+                Name = student!.Name!;
+                Email = student!.Email!;
+                FederalRegistration = student!.FederalRegistration!;
+                PhoneNumber = student!.PhoneNumber!;
+                BirthDate = student!.BirthDate;
+            }
+        }
+    }*/
+    private void changeType()
+    {
+        if(Type == "password")
+        {
+            Type = "text";
+            Class = "fas fa-eye-slash";
+        }
+        else
+        {
+            Type = "password";
+            Class = "fas fa-eye";
+        }
+
+
+    }
+
+    /*public async Task SetStudent()
+    {
+        var student = new Student();
+        student.Name = Name;
+        student.Email = Email;
+        student.FederalRegistration = FederalRegistration;
+        student.PhoneNumber = PhoneNumber;
+        student.BirthDate = BirthDate;
+        if(!id.HasValue)
+            await StudentService.SetStudentAsync(DbFactory, student);
+        else
+        {
+            student.Id = id.Value;
+            await StudentService.UpdateStudentAsync(DbFactory, student);
+        }
+        navManager.NavigateTo($"/students", true);   
+    }*/
+}
