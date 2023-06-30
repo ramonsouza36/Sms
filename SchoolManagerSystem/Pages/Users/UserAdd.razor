@@ -5,6 +5,10 @@
 @using SchoolManagerSystem.Services;
 @using System.Linq;
 @using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Identity;
+@using System;
+@using System.Text;
+@using System.Security.Cryptography;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager navManager;
 @inject StudentService StudentService;
@@ -38,7 +42,7 @@
         </div>
     </div>
     <div class="mt-3">
-        <button type="button" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-primary" @onclick="(() => SetUser())">Salvar</button>
         <button type="button" class="btn btn-secondary">Cancelar</button>
     </div>
 </div>
@@ -80,8 +84,39 @@
             Type = "password";
             Class = "fas fa-eye";
         }
+    }
 
+    private async Task SetUser()
+    {
+        var User = new IdentityUser();
+        User.UserName = UserName;
+        User.NormalizedUserName = UserName.ToUpper();
+        User.Email = Email;
+        User.NormalizedEmail = Email.ToUpper();
+        User.PasswordHash = ComputeMD5(Password);
+        User.Id = Guid.NewGuid().ToString();
+        using var context = DbFactory.CreateDbContext();
+        await context.Users.AddAsync(User);
+        await context.SaveChangesAsync();
+    }
 
+    static string ComputeMD5(string s)
+    {
+        StringBuilder sb = new StringBuilder();
+ 
+        // Inicializa um objeto hash MD5
+        using (MD5 md5 = MD5.Create())
+        {
+            // Calcula o hash da string dada
+            byte[] hashValue = md5.ComputeHash(Encoding.UTF8.GetBytes(s));
+ 
+            // Converte o array de bytes para o formato string
+            foreach (byte b in hashValue) {
+                sb.Append($"{b:X2}");
+            }
+        }
+ 
+        return sb.ToString();
     }
 
     /*public async Task SetStudent()
