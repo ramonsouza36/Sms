@@ -5,9 +5,10 @@
 @using SchoolManagerSystem.Services;
 @using System.Linq;
 @using Microsoft.EntityFrameworkCore;
+@using Microsoft.AspNetCore.Identity;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager navManager;
-@inject StudentService StudentService;
+@inject UserService UserService;
 
 <div>
     <a href="useradd" class="btn btn-primary active mb-3 text-center" role="button" data-bs-toggle="button" aria-pressed="true">
@@ -29,16 +30,16 @@
                 </tr>
             </thead>
             <tbody>
-                @if (students is not null)
+                @if (users is not null)
                 {
-                    foreach(var item in students)
+                    foreach(var item in users)
                     {
                         <tr>
-                            <td>@item.Name</td>
+                            <td>@item.UserName</td>
                             <td>@item.Email</td>
                             <td>
                                 <div class="divBotoes">
-                                    <a title="Editar" class="btn btn-secondary text-center" role="button" data-bs-toggle="button" @onclick="(() => showStudent(item.Id))" aria-pressed="true">
+                                    <a title="Editar" class="btn btn-secondary text-center" role="button" data-bs-toggle="button" @onclick="(() => showUser())" aria-pressed="true">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
                                     <a title="Excluir" class="btn btn-danger text-center" role="button" data-bs-toggle="button" @onclick="(() => deleteStudent(item.Id))" aria-pressed="true">
@@ -54,21 +55,21 @@
     </div>
 </div>
 @code {
-    List<Student>? students { get; set; }
+    List<IdentityUser>? users { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        students = await StudentService.GetStudentsAsync(DbFactory);
+        users = await UserService.GetUsersAsync(DbFactory);
     }
 
-    public void showStudent(Guid id)
+    public void showUser()
     {
-        navManager.NavigateTo($"studentadd/{id}");
+        navManager.NavigateTo($"useradd");
     }
 
-    public async Task deleteStudent(Guid id)
+    public async Task deleteStudent(string id)
     {
-        await StudentService.DeleteStudentAsync(DbFactory, id);
-        navManager.NavigateTo($"students", true);
+        await UserService.DeleteUserAsync(DbFactory, id);
+        navManager.NavigateTo($"users", true);
     }
 }

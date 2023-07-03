@@ -11,7 +11,7 @@
 @using System.Security.Cryptography;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager navManager;
-@inject StudentService StudentService;
+@inject UserService UserService;
 
 <PageTitle>Users</PageTitle>
 
@@ -57,21 +57,19 @@
     [Parameter]
     public Guid? id { get; set; }
 
-    /*protected override async Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        if(id.HasValue)
+        if(id != Guid.Empty|| id is not null)
         {
-            var student = await StudentService.GetStudentByIdAsync(DbFactory,id.Value);
-            if(student != null)
+            /*var user = null ;//await UserService.GetUserByIdAsync(DbFactory,id!);
+            if(user != null)
             {
-                Name = student!.Name!;
-                Email = student!.Email!;
-                FederalRegistration = student!.FederalRegistration!;
-                PhoneNumber = student!.PhoneNumber!;
-                BirthDate = student!.BirthDate;
-            }
+                UserName = user!.UserName!;
+                Email = user!.Email!;
+            }*/
         }
-    }*/
+    }
+
     private void changeType()
     {
         if(Type == "password")
@@ -93,47 +91,7 @@
         User.NormalizedUserName = UserName.ToUpper();
         User.Email = Email;
         User.NormalizedEmail = Email.ToUpper();
-        User.PasswordHash = ComputeMD5(Password);
-        User.Id = Guid.NewGuid().ToString();
-        using var context = DbFactory.CreateDbContext();
-        await context.Users.AddAsync(User);
-        await context.SaveChangesAsync();
+        await UserService.SetUserAsync(DbFactory, User, Password);
+        navManager.NavigateTo($"users", true);
     }
-
-    static string ComputeMD5(string s)
-    {
-        StringBuilder sb = new StringBuilder();
- 
-        // Inicializa um objeto hash MD5
-        using (MD5 md5 = MD5.Create())
-        {
-            // Calcula o hash da string dada
-            byte[] hashValue = md5.ComputeHash(Encoding.UTF8.GetBytes(s));
- 
-            // Converte o array de bytes para o formato string
-            foreach (byte b in hashValue) {
-                sb.Append($"{b:X2}");
-            }
-        }
- 
-        return sb.ToString();
-    }
-
-    /*public async Task SetStudent()
-    {
-        var student = new Student();
-        student.Name = Name;
-        student.Email = Email;
-        student.FederalRegistration = FederalRegistration;
-        student.PhoneNumber = PhoneNumber;
-        student.BirthDate = BirthDate;
-        if(!id.HasValue)
-            await StudentService.SetStudentAsync(DbFactory, student);
-        else
-        {
-            student.Id = id.Value;
-            await StudentService.UpdateStudentAsync(DbFactory, student);
-        }
-        navManager.NavigateTo($"/students", true);   
-    }*/
 }
