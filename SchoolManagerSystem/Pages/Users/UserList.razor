@@ -39,7 +39,7 @@
                             <td>@item.Email</td>
                             <td>
                                 <div class="divBotoes">
-                                    <a title="Editar" class="btn btn-secondary text-center" role="button" data-bs-toggle="button" @onclick="(() => showUser())" aria-pressed="true">
+                                    <a title="Editar" class="btn btn-secondary text-center" role="button" data-bs-toggle="button" @onclick="(() => showUser(item.Id))" aria-pressed="true">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
                                     <a title="Excluir" class="btn btn-danger text-center" role="button" data-bs-toggle="button" @onclick="(() => deleteStudent(item.Id))" aria-pressed="true">
@@ -62,9 +62,10 @@
         users = await UserService.GetUsersAsync(DbFactory);
     }
 
-    public void showUser()
+    public void showUser(string userId)
     {
-        navManager.NavigateTo($"useradd");
+        var id = Guid.ParseExact(userId,"D");
+        navManager.NavigateTo($"useradd/{id}");
     }
 
     public async Task deleteStudent(string id)

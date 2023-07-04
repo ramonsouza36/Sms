@@ -61,12 +61,12 @@
     {
         if(id != Guid.Empty|| id is not null)
         {
-            /*var user = null ;//await UserService.GetUserByIdAsync(DbFactory,id!);
+            var user = await UserService.GetUserByIdAsync(DbFactory,id!.ToString()!);
             if(user != null)
             {
                 UserName = user!.UserName!;
                 Email = user!.Email!;
-            }*/
+            }
         }
     }
 
