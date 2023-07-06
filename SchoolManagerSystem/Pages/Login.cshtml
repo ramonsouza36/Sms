@@ -7,4 +7,15 @@
     Layout = "_LayoutLogin";
 }
 
-
+<div class="card bg-info">
+    <form method="post" asp-page="Index">
+        <h4 class="card-title">Login</h4>
+        <div class="card-body">
+            <input class="form-control mb-3" placeholder="Usuário" asp-for="@Model.Username"/>
+            <input class="form-control" placeholder="Senha" type="password" asp-for="@Model.Password"/>
+        </div>
+        <div class="loginButton">
+            <input class="btn btn-primary" type="submit">Entrar</button>
+        </div>
+    </form>
+</div>

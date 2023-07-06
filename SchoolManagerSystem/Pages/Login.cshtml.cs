@@ -11,16 +11,35 @@ public class LoginModel : PageModel
 {
     private readonly ILogger<LoginModel> logger;
 
+    [BindProperty]
+    public string? ErrorText { get; set; }
+
+    [BindProperty]
+    public string? Username { get; set; }
+
+    [BindProperty]
+    public string? Password { get; set; }
+
     public LoginModel(
          ILogger<LoginModel> logger)
     {
         this.logger = logger;
     }
 
-    [BindProperty]
-    public string? ErrorText { get; set; }
-
     public void OnGet()
     {
+
+    }
+
+    public IActionResult OnPost()
+    {
+        if (Username.Equals("abc") && Password.Equals("123"))
+        {
+            return RedirectToPage("Welcome");
+        }
+        else
+        {
+            return Page();
+        }
     }
 }
