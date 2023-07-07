@@ -23,10 +23,10 @@ namespace SchoolManagerSystem.Services
             return users;
         }
 
-        public async Task<IdentityUser> GetUserByUserNameAsync(IDbContextFactory<ApplicationDbContext> DbFactory, IdentityUser user)
+        public async Task<IdentityUser> GetUserByUserNameAsync(IDbContextFactory<ApplicationDbContext> DbFactory, string userName)
         {
             using var context = DbFactory.CreateDbContext();
-            var users = await context.Users.Where(i => i.UserName == user.UserName).FirstOrDefaultAsync();
+            var users = await context.Users.Where(i => i.UserName == userName).FirstOrDefaultAsync();
             return users;
         }
 

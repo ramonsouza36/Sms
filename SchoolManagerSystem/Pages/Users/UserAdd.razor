@@ -27,7 +27,7 @@
         <div class="col-md-3 me-2">
             <label class="label">Senha</label>
             <div class="input-group align-items-center">
-                <input type="@Type" class="form-control" placeholder="Senha"/>
+                <input type="@Type" class="form-control" @bind-value = "@Password" placeholder="Senha"/>
                 <button class="btn btn-secondary text-white" @onclick="(() => changeType())"><i class="@Class"></i></button>
             </div>        </div>
         <div class="col-md-3 me-2">
