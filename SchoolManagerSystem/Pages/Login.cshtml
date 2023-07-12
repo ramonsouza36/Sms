@@ -9,9 +9,22 @@
 
 <div class="card bg-info">
     <form method="post" asp-page="Login">
-        <h4 class="card-title">Login</h4>
-        <div class="card-body">
-            <input class="form-control mb-3" placeholder="Usuário" asp-for="@Model.Username"/>
+        <h4 class="loginTitle">Login</h4>
+        <div class="card-body mt-0">
+            @{
+                if(!string.IsNullOrEmpty(Model.ErrorText))
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @Model.ErrorText
+                    </div>
+                }
+                else{
+                    <div class="bg-info" role="alert">
+                        @Model.ErrorText
+                    </div>
+                }
+            }
+            <input class="form-control mb-1" placeholder="Usuário" asp-for="@Model.Username"/>
             <input class="form-control" placeholder="Senha" type="password" asp-for="@Model.Password"/>
         </div>
         <div class="loginButton">

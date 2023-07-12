@@ -28,7 +28,6 @@ namespace SchoolManagerSystem.Services
             using var context = DbFactory.CreateDbContext();
             var instructor = context.Instructor.Where(i => i.Id == id).FirstOrDefault();
             return instructor;
-
         }
 
         public async Task DeleteInstructorAsync(IDbContextFactory<ApplicationDbContext> DbFactory, Guid id)

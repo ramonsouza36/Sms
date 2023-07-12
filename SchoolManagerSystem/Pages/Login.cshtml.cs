@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SchoolManagerSystem.Services;
+using Microsoft.EntityFrameworkCore;
+using SchoolManagerSystem.Data;
 
 namespace SchoolManagerSystem.Pages;
 
@@ -11,8 +14,12 @@ public class LoginModel : PageModel
 {
     private readonly ILogger<LoginModel> logger;
 
+    private readonly ApplicationDbContext _context;
+
+    private LoginService loginService;
+
     [BindProperty]
-    public string? ErrorText { get; set; }
+    public string ErrorText { get; set; } = "";
 
     [BindProperty]
     public string? Username { get; set; }
@@ -21,25 +28,23 @@ public class LoginModel : PageModel
     public string? Password { get; set; }
 
     public LoginModel(
-         ILogger<LoginModel> logger)
+         ILogger<LoginModel> logger,
+         ApplicationDbContext context,
+         LoginService loginService)
     {
         this.logger = logger;
+        _context = context;
+        this.loginService = loginService;
     }
 
     public void OnGet()
     {
-
     }
 
-    public IActionResult OnPost()
+    public async Task OnPost()
     {
-        if (Username.Equals("abc") && Password.Equals("123"))
-        {
-            return RedirectToPage("Welcome");
-        }
-        else
-        {
-            return Page();
-        }
+        ErrorText = await loginService.LoginAsync(Username, Password,_context);
+        if(string.IsNullOrEmpty(ErrorText))
+            Redirect("/");
     }
 }

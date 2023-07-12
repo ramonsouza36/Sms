@@ -89,8 +89,8 @@ input{
 }
 
 .loginButton{
-  margin-top: 0px;
-  margin-bottom: 10%;
+  margin-top: -10px;
+  margin-bottom: 5%;
 }
 .form-control{
     display: inline-flex;
@@ -110,5 +110,10 @@ input{
     display: grid;
    font-size: large;
    margin-top: 3px;
+}
+
+.loginTitle{
+    margin-top: 50px;
+    width: auto;
 }
 

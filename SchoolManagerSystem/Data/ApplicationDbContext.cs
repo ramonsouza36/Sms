@@ -15,6 +15,4 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<SchoolManagerSystem.Models.Student> Student { get; set; }
     public DbSet<SchoolManagerSystem.Models.ClassStudent> ClassStudent { get; set; }
     public DbSet<SchoolManagerSystem.Models.Plate> Plate { get; set; }
-
-
 }
