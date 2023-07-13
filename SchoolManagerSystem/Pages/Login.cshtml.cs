@@ -39,12 +39,15 @@ public class LoginModel : PageModel
 
     public void OnGet()
     {
+        Redirect("/courses");
     }
 
-    public async Task OnPost()
+    public async Task<IActionResult?> OnPost()
     {
         ErrorText = await loginService.LoginAsync(Username, Password,_context);
         if(string.IsNullOrEmpty(ErrorText))
-            Redirect("/");
+            return Redirect("/");
+        else
+            return null;
     }
 }
