@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using SchoolManagerSystem.Services;
 using Microsoft.EntityFrameworkCore;
 using SchoolManagerSystem.Data;
+using System.Security.Claims;
 
 namespace SchoolManagerSystem.Pages;
 
@@ -46,7 +47,14 @@ public class LoginModel : PageModel
     {
         ErrorText = await loginService.LoginAsync(Username, Password,_context);
         if(string.IsNullOrEmpty(ErrorText))
+        {
+            var identity = new ClaimsIdentity("password");
+            identity.AddClaim(new Claim(ClaimTypes.Name, Username.ToLower()));
+            var principal = new ClaimsPrincipal(identity);
+            var authProperties = new AuthenticationProperties();
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,principal,authProperties);
             return Redirect("/");
+        }
         else
             return null;
     }
