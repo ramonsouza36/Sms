@@ -68,7 +68,7 @@ a, .btn-link {
   background-color: gray;
   left: 35%;
   right: 35%;
-  margin-top: 8%;
+  margin-top: 15%;
   box-shadow: 5px;
   text-align: center;
   align-items: center;
@@ -94,7 +94,7 @@ input{
 }
 .form-control{
     display: inline-flex;
-    width: max-content
+    width: 100%;
 }
 .footer {
     position: absolute;

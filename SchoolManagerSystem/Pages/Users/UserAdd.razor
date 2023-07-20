@@ -20,25 +20,23 @@
 </div>
 <div class="container-fluid">
     <div class="row col-md-12 d-md-inline-flex">
-        <div class="col-md-3 me-2">
+        <div class="col-md-3">
             <label class="label">Nome do usuário</label>
-            <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Nome usuário" @bind-value="@UserName"/>
+            <input class="form-control border-secondary col-md-3" type="text" placeholder="Nome usuário" @bind-value="@UserName"/>
         </div>
-        <div class="col-md-3 me-2">
+        <div class="col-md-3">
             <label class="label">Senha</label>
             <div class="input-group align-items-center">
-                <input type="@Type" class="form-control" @bind-value = "@Password" placeholder="Senha"/>
+                <input type="@Type" class="form-control border-secondary col-md-3" @bind-value = "@Password" placeholder="Senha"/>
                 <button class="btn btn-secondary text-white" @onclick="(() => changeType())"><i class="@Class"></i></button>
             </div>        </div>
-        <div class="col-md-3 me-2">
+        <div class="col-md-3">
             <label class="label">Confirmar senha</label>
-            <input class="form-control border-secondary col-md-4 me-2" type="@Type" placeholder="Confirmar senha" @bind-value="@PasswordConfirmation"/>
+            <input class="form-control border-secondary col-md-3" type="@Type" placeholder="Confirmar senha" @bind-value="@PasswordConfirmation"/>
         </div>
-    </div>
-    <div class="row col-md-12 d-md-inline-flex mt-3">
-        <div class="col-md-3 me-2">
+        <div class="col-md-3">
             <label class="label">Email</label>
-            <input class="form-control border-secondary col-md-4 me-2" type="text" placeholder="Telefone" @bind-value="@Email"/>
+            <input class="form-control border-secondary col-md-3" type="text" placeholder="Telefone" @bind-value="@Email"/>
         </div>
     </div>
     <div class="mt-3">
