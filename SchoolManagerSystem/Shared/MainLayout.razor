@@ -13,9 +13,16 @@
             <AuthorizeView>
                 <Authorized>
                     Hello, @context?.User?.Identity?.Name
-                    <form method="post" action="/Logout">
-                        <button type="submit" class="nav-link btn btn-link">Log out</button>
-                    </form>
+                    <div class="dropdown ms-2">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
+                        aria-haspopup="true" aria-expanded="false" @onclick = "(() => ChangeVisibility())">
+                        Opções
+                        </button>
+                        <div class="dropdown-menu @visibility" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Editar</a>
+                            <a class="dropdown-item" href="/Logout">Logout</a>
+                        </div>
+                    </div>
                 </Authorized>
                 <NotAuthorized>
                     @{navManager.NavigateTo($"Login", true);}
@@ -27,3 +34,14 @@
         </article>
     </main>
 </div>
+@code{
+    public string visibility = "d-none";
+
+    private void ChangeVisibility()
+    {
+        if(visibility == "d-none")
+            visibility = "d-grid";
+        else
+            visibility  = "d-none";
+    }
+}

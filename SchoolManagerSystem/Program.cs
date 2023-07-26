@@ -32,6 +32,7 @@ builder.Services.AddSingleton<ClassStudentService>();
 builder.Services.AddSingleton<PlateService>();
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<LoginService>();
+builder.Services.AddSingleton<RoleService>();
 
 var app = builder.Build();
 
