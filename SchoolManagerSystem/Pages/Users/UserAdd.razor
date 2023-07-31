@@ -12,6 +12,7 @@
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager navManager;
 @inject UserService UserService;
+@inject RoleService RoleService;
 
 <PageTitle>Users</PageTitle>
 
@@ -32,11 +33,29 @@
             </div>        </div>
         <div class="col-md-3">
             <label class="label">Confirmar senha</label>
-            <input class="form-control border-secondary col-md-3" type="@Type" placeholder="Confirmar senha" @bind-value="@PasswordConfirmation"/>
+            <div class="input-group align-items-center">
+                <input type="@TypeConfirmation" class="form-control border-secondary col-md-3" @bind-value = "@PasswordConfirmation" placeholder="Senha"/>
+                <button class="btn btn-secondary text-white" @onclick="(() => changeTypeConfirmation())"><i class="@ClassConfirmation"></i></button>
+            </div>   
         </div>
         <div class="col-md-3">
             <label class="label">Email</label>
             <input class="form-control border-secondary col-md-3" type="text" placeholder="Telefone" @bind-value="@Email"/>
+        </div>
+    </div>
+    <div class="row col-md-12 d-md-inline-flex">
+        <div class="col-md-3">
+            <label class="label">Tipo de usuário</label>
+            <select class="form-select border-secondary col-md-4 me-2" type="text" placeholder="Nome Curso" @bind = "typeId">
+                <option value=@Guid.Empty>Selecione o tipo....</option>
+                @if(roles != null)
+                {
+                    foreach(var item in roles!)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                }
+            </select>
         </div>
     </div>
     <div class="mt-3">
@@ -51,9 +70,15 @@
     public string PasswordConfirmation = "";
     public string Email = "";
     public string Type = "password";
+    public string TypeConfirmation = "password";
     public string Class = "fas fa-eye";
+    public string ClassConfirmation = "fas fa-eye";
     [Parameter]
     public Guid? id { get; set; }
+
+    public Guid typeId = Guid.Empty;
+
+    public List<IdentityRole>? roles;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -66,6 +91,7 @@
                 Email = user!.Email!;
             }
         }
+        roles = await RoleService.GetRolesAsync(DbFactory);
     }
 
     private void changeType()
@@ -82,14 +108,36 @@
         }
     }
 
+    private void changeTypeConfirmation()
+    {
+        if(TypeConfirmation == "password")
+        {
+            TypeConfirmation = "text";
+            ClassConfirmation = "fas fa-eye-slash";
+        }
+        else
+        {
+            TypeConfirmation = "password";
+            ClassConfirmation = "fas fa-eye";
+        }
+    }
+
     private async Task SetUser()
     {
-        var User = new IdentityUser();
-        User.UserName = UserName;
-        User.NormalizedUserName = UserName.ToUpper();
-        User.Email = Email;
-        User.NormalizedEmail = Email.ToUpper();
-        await UserService.SetUserAsync(DbFactory, User, Password);
+        if(id != Guid.Empty|| id is not null)
+        {
+            var user = await UserService.GetUserByIdAsync(DbFactory, id.ToString());
+            await UserService.UpdateUserAsync(DbFactory, user.Id, Password, typeId);
+        }
+        else
+        {
+            var User = new IdentityUser();
+            User.UserName = UserName;
+            User.NormalizedUserName = UserName.ToUpper();
+            User.Email = Email;
+            User.NormalizedEmail = Email.ToUpper();
+            await UserService.SetUserAsync(DbFactory, User, Password, typeId);
+        }
         navManager.NavigateTo($"users", true);
     }
 }
