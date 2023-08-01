@@ -90,6 +90,8 @@
                 UserName = user!.UserName!;
                 Email = user!.Email!;
             }
+            var userRole = await RoleService.GetRoleByUserIdAsync(DbFactory,id!.ToString()!);
+            typeId = Guid.ParseExact(userRole.Id,"D");
         }
         roles = await RoleService.GetRolesAsync(DbFactory);
     }
