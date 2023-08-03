@@ -116,7 +116,7 @@
         var message = "Cadastro realizado com sucesso!";
         var status = "bg-success text-white";
         await ShowToast(message, status);
-        //navManager.NavigateTo($"/classStudent", true);
+        navManager.NavigateTo($"/classStudent", true);
     }
 
     public async Task ShowToast(string message, string status)

@@ -1,0 +1,60 @@
+@page "/mycurse"
+@using SchoolManagerSystem.Data;
+@using SchoolManagerSystem.Services;
+@using SchoolManagerSystem.Models;
+@using System.Linq;
+@using Microsoft.EntityFrameworkCore;
+@using SchoolManagerSystem.Pages.Components
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject ClassStudentService ClassStudentService;
+@inject StudentService StudentService;
+@inject PlateService PlateService;
+@inject UserService UserService;
+@inject NavigationManager navManager;
+@inject AuthenticationStateProvider GetAuthenticationStateAsync;
+
+<div class="container-fluid ps-0">
+    <h3>Meus Cursos</h3>
+</div>
+<div class="container-fluid">
+    <div class="row col-md-12 d-md-inline-flex">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Curso</th>
+                    <th>Data de matrícula</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (studentPlates is not null)
+                {
+                    foreach(var item in studentPlates)
+                    {
+                        <tr>
+                            <td>@item.NameCourse</td>
+                            <td>@item.PlateDate.Date</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@code{
+    [Parameter]
+    public Guid? id { get; set; }
+    public List<Plate>? studentPlates { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+        var authUser = authstate.User;
+        var name = authUser.Identity.Name;
+        var users = await UserService.GetUsersAsync(DbFactory);
+        var user = users.FirstOrDefault(u => u.UserName.ToLower() == name);
+        var students = await StudentService.GetStudentsAsync(DbFactory);
+        var student = students.FirstOrDefault(s => s.Email == user.Email);
+        var plates = await PlateService.GetPlateAsync(DbFactory);
+        studentPlates = plates.Where(p => p.StudentId == student.Id).ToList();
+    }
+}

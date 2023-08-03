@@ -82,7 +82,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        if(id != Guid.Empty|| id is not null)
+        if(id != Guid.Empty && id is not null)
         {
             var user = await UserService.GetUserByIdAsync(DbFactory,id!.ToString()!);
             if(user != null)
@@ -126,10 +126,14 @@
 
     private async Task SetUser()
     {
-        if(id != Guid.Empty|| id is not null)
+        if(id != Guid.Empty && id is not null)
         {
             var user = await UserService.GetUserByIdAsync(DbFactory, id.ToString());
-            await UserService.UpdateUserAsync(DbFactory, user.Id, Password, typeId);
+            user.UserName = UserName;
+            user.NormalizedUserName = UserName.ToUpper();
+            user.Email = Email;
+            user.NormalizedEmail = Email.ToUpper();
+            await UserService.UpdateUserAsync(DbFactory, user, Password, typeId);
         }
         else
         {

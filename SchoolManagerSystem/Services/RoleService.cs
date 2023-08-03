@@ -15,6 +15,14 @@ namespace SchoolManagerSystem.Services
             return roles;
         }
 
+        public async Task<IdentityRole> GetRoleByUserIdAsync(IDbContextFactory<ApplicationDbContext> DbFactory, string id)
+        {
+            using var context = DbFactory.CreateDbContext();
+            var userRole = await context.UserRoles.Where(i => i.UserId == id).FirstOrDefaultAsync();
+            var role = await context.Roles.Where(d => d.Id == userRole.RoleId).FirstOrDefaultAsync();
+            return role;
+        }
+
         public async Task SetRoleAsync(IDbContextFactory<ApplicationDbContext> DbFactory, string nameRole)
         {
             using var context = DbFactory.CreateDbContext();

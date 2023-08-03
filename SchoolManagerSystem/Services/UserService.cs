@@ -37,26 +37,29 @@ namespace SchoolManagerSystem.Services
             newUser.Id = id.ToString();
             newUser.PasswordHash = ComputeMD5(password);
             context.Users.Add(newUser);
-            var userRoles = new IdentityUserRole<Guid>();
-            userRoles.UserId = id;
-            userRoles.RoleId = typeId;
+            var userRoles = new IdentityUserRole<string>();
+            userRoles.UserId = id.ToString();
+            userRoles.RoleId = typeId.ToString();
+            context.UserRoles.Add(userRoles);
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateUserAsync(IDbContextFactory<ApplicationDbContext> DbFactory, string userId, string password,Guid typeId)
+        public async Task UpdateUserAsync(IDbContextFactory<ApplicationDbContext> DbFactory, IdentityUser newUser, string password,Guid typeId)
         {
             using var context = DbFactory.CreateDbContext();
-            var newUser = await context.Users.Where(i => i.Id == userId).FirstOrDefaultAsync();  
             if(!string.IsNullOrEmpty(password))  
                 newUser.PasswordHash = ComputeMD5(password);
-            var roles = await context.UserRoles.Where(i =>i.RoleId == typeId.ToString() && i.UserId == userId.ToString()).ToListAsync();
-            if(roles != null )
+            var roles = await context.UserRoles.Where(i =>i.RoleId == typeId.ToString() && i.UserId == newUser.Id).ToListAsync();
+            if(roles != null && !roles.Any(i => i.RoleId == typeId.ToString()))
             {
-                var userRoles = new IdentityUserRole<string>();
-                userRoles.UserId = userId;
-                userRoles.RoleId = typeId.ToString();
+                var userRoles = new IdentityUserRole<string>
+                {
+                    UserId = newUser.Id,
+                    RoleId = typeId.ToString()
+                };
                 context.UserRoles.Add(userRoles);
             }
+            context.Users.Update(newUser);
             await context.SaveChangesAsync();
         }
 
