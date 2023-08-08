@@ -7,6 +7,7 @@ using SchoolManagerSystem.Services;
 using Microsoft.EntityFrameworkCore;
 using SchoolManagerSystem.Data;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace SchoolManagerSystem.Pages;
 
@@ -16,6 +17,8 @@ public class LoginModel : PageModel
     private readonly ILogger<LoginModel> logger;
 
     private readonly ApplicationDbContext _context;
+
+    private readonly UserManager<IdentityUser> _userManager;
 
     private LoginService loginService;
 
@@ -31,11 +34,13 @@ public class LoginModel : PageModel
     public LoginModel(
          ILogger<LoginModel> logger,
          ApplicationDbContext context,
-         LoginService loginService)
+         LoginService loginService,
+         UserManager<IdentityUser> userManager)
     {
         this.logger = logger;
         _context = context;
         this.loginService = loginService;
+        _userManager = userManager;
     }
 
     public void OnGet()
@@ -49,7 +54,14 @@ public class LoginModel : PageModel
         if(string.IsNullOrEmpty(ErrorText))
         {
             var identity = new ClaimsIdentity("password");
-            identity.AddClaim(new Claim(ClaimTypes.Name, Username.ToLower()));
+            var user = _context.Users.Where(i => i.UserName == Username).FirstOrDefault();
+            var roles = await _userManager.GetRolesAsync(user);
+            identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+            if(roles.Count() > 0)
+            {
+                foreach(var role in roles)
+                    identity.AddClaim(new Claim(ClaimTypes.Role, role));
+            }
             var principal = new ClaimsPrincipal(identity);
             var authProperties = new AuthenticationProperties();
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,principal,authProperties);

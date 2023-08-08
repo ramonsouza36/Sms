@@ -14,6 +14,7 @@ builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddAuthentication(options =>
 {
