@@ -1,5 +1,6 @@
 @page "/useradd"
 @page "/useradd/{id:guid}"
+@page "/{useredit}/{id:guid}"
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
 @using SchoolManagerSystem.Services;
@@ -75,6 +76,9 @@
     public string ClassConfirmation = "fas fa-eye";
     [Parameter]
     public Guid? id { get; set; }
+    
+    [Parameter]
+    public string? useredit { get; set; }
 
     public Guid typeId = Guid.Empty;
 
@@ -144,6 +148,9 @@
             User.NormalizedEmail = Email.ToUpper();
             await UserService.SetUserAsync(DbFactory, User, Password, typeId);
         }
-        navManager.NavigateTo($"users", true);
+        if(useredit !="myuser")
+            navManager.NavigateTo($"users", true);
+        else
+            navManager.NavigateTo($"/", true);
     }
 }

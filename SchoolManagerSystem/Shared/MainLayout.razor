@@ -1,5 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@using Microsoft.AspNetCore.Identity;
+@inherits LayoutComponentBase
 @inject NavigationManager navManager;
+@inject UserManager<IdentityUser> userManager;
 
 <PageTitle>Sms</PageTitle>
 
@@ -19,8 +21,8 @@
                         Opções
                         </button>
                         <div class="dropdown-menu @visibility" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Editar</a>
-                            <a class="dropdown-item" href="/Logout">Logout</a>
+                            <a class="dropdown-item ms-0" @onclick="(() => editUser(context?.User?.Identity?.Name))"><i class="fas fa-pencil-alt"> Editar</i></a>
+                            <a class="dropdown-item ms-0" href="/Logout"><i class="fas fa-sign-out-alt">Logout</i></a>
                         </div>
                     </div>
                 </Authorized>
@@ -43,5 +45,11 @@
             visibility = "d-grid";
         else
             visibility  = "d-none";
+    }
+
+    private async void editUser(string UserName)
+    {
+       var user = await userManager.FindByNameAsync(UserName);
+       navManager.NavigateTo($"/myuser/{user.Id}");
     }
 }

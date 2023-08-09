@@ -51,7 +51,7 @@
         var authUser = authstate.User;
         var name = authUser.Identity.Name;
         var users = await UserService.GetUsersAsync(DbFactory);
-        var user = users.FirstOrDefault(u => u.UserName.ToLower() == name);
+        var user = users.FirstOrDefault(u => u.UserName == name);
         var students = await StudentService.GetStudentsAsync(DbFactory);
         var student = students.FirstOrDefault(s => s.Email == user.Email);
         var plates = await PlateService.GetPlateAsync(DbFactory);

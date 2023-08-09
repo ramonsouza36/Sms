@@ -1,4 +1,5 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@attribute [Authorize]
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">SMS</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -9,49 +10,71 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home me-2" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="students">
-                <span class="fas fa-user-graduate fa-lg me-4"></span> Alunos
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="instructors">
-                <span class="fas fa-users fa-lg me-3"></span>Professores
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="courses">
-                <span class="fas fa-book fa-lg me-4"></span> Cursos
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="classStudent">
-                <span class="fas fa-chalkboard-teacher fa-lg me-3"></span>Turmas
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="plates">
-                <span class="fas fa-id-card fa-lg me-3"></span> Matrículas
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="users">
-                <span class="fas fa-user-circle fa-lg me-3"></span> Usuários
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="roles">
-                <span class="fas fa-key fa-lg me-3"></span> Papel
-            </NavLink>
-        </div>
+        <AuthorizeView  Roles="Administrador">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home me-2" aria-hidden="true"></span> Home
+                </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView  Roles="Administrador">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="students">
+                    <span class="fas fa-user-graduate fa-lg me-4"></span> Alunos
+                </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView  Roles="Administrador">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="instructors">
+                    <span class="fas fa-users fa-lg me-3"></span>Professores
+                </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView  Roles="Administrador">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="courses">
+                    <span class="fas fa-book fa-lg me-4"></span> Cursos
+                </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView  Roles="Administrador">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="classStudent">
+                    <span class="fas fa-chalkboard-teacher fa-lg me-3"></span>Turmas
+                </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView  Roles="Administrador">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="plates">
+                    <span class="fas fa-id-card fa-lg me-3"></span> Matrículas
+                </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView  Roles="Administrador">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="users">
+                    <span class="fas fa-user-circle fa-lg me-3"></span> Usuários
+                </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView  Roles="Administrador">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="roles">
+                    <span class="fas fa-key fa-lg me-3"></span> Papel
+                </NavLink>
+            </div>
+        </AuthorizeView>
+        <AuthorizeView  Roles="Aluno">
+            <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="mycurse">
+                        <span class="fas fa-key fa-lg me-3"></span> Meus cursos
+                    </NavLink>
+                </div>
+        </AuthorizeView>
     </nav>
 </div>
-
 @code {
     private bool collapseNavMenu = true;
 
@@ -62,3 +85,4 @@
         collapseNavMenu = !collapseNavMenu;
     }
 }
+
