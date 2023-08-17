@@ -11,52 +11,59 @@
 @inject PlateService PlateService;
 @inject NavigationManager navManager;
 @using SchoolManagerSystem.Pages.Components
+<AuthorizeView Roles="Administrativo,Administrador">
+    <Authorized>
+        <PageTitle>Plate</PageTitle>
 
-<PageTitle>Plate</PageTitle>
-
-<div class="container-fluid">
-    <h3>Matrícula</h3>
-</div>
-<div class="container-fluid mb-3">
-    <div class="row col-md-12">
-        <div class="col-md-4">
-            <label class="label">Nome do curso</label>
-            <select class="form-select col-4 me-2 w-0" type="text" placeholder="Nome Curso" @bind = "CourseId">
-                <option value="@Guid.Empty">Selecione o curso....</option>
-                @if(classStudents != null)
-                {
-                    foreach(var item in classStudents!)
-                    {
-                        <option value="@item.Id">@item.NameCourse</option>
-                    }
-                }
-            </select>
+        <div class="container-fluid">
+            <h3>Matrícula</h3>
         </div>
-        <div class="col-md-4">
-            <label class="label">Nome do aluno</label>
-            <select class="form-select col-4 me-2 w-0" type="text" placeholder="Nome Aluno" @bind = "StudentId" >
-                <option value="">Selecione o aluno....</option>
-                
-                @if(students != null)
-                {
-                    foreach(var item in students!)
-                    {
-                        <option value="@item.Id">@item.Name</option>
-                    }
-                }
-            </select>
+        <div class="container-fluid mb-3">
+            <div class="row col-md-12">
+                <div class="col-md-4">
+                    <label class="label">Nome do curso</label>
+                    <select class="form-select col-4 me-2 w-0" type="text" placeholder="Nome Curso" @bind = "CourseId">
+                        <option value="@Guid.Empty">Selecione o curso....</option>
+                        @if(classStudents != null)
+                        {
+                            foreach(var item in classStudents!)
+                            {
+                                <option value="@item.Id">@item.NameCourse</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="label">Nome do aluno</label>
+                    <select class="form-select col-4 me-2 w-0" type="text" placeholder="Nome Aluno" @bind = "StudentId" >
+                        <option value="">Selecione o aluno....</option>
+                        
+                        @if(students != null)
+                        {
+                            foreach(var item in students!)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="label">Data matrícula</label>
+                    <input type="date" class="form-control col-md-4 mt-0" placeholder="Data Matrícula" @bind = "PlateDate"> 
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="button" class="btn btn-primary" @onclick="(() => SetPlate())">Salvar</button>
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+            </div>
         </div>
-        <div class="col-md-4">
-            <label class="label">Data matrícula</label>
-            <input type="date" class="form-control col-md-4 mt-0" placeholder="Data Matrícula" @bind = "PlateDate"> 
-        </div>
-    </div>
-    <div class="mt-3">
-        <button type="button" class="btn btn-primary" @onclick="(() => SetPlate())">Salvar</button>
-        <button type="button" class="btn btn-secondary">Cancelar</button>
-    </div>
-</div>
-
+    </Authorized>
+    <NotAuthorized>
+        @{
+            navManager.NavigateTo("/");
+        }
+    </NotAuthorized>
+</AuthorizeView>
 <Toast ClassToast="@ClassToast" Message="@Message" Status="@Status"/>
             
 @code{
@@ -101,7 +108,20 @@
             
         else
             await PlateService.SetPlateAsync(DbFactory, plate);
-            
+
+        var message = "Cadastro realizado com sucesso!";
+        var status = "bg-success text-white";
+        await ShowToast(message, status);   
         navManager.NavigateTo($"/plates", true);  
+    }
+
+    public async Task ShowToast(string message, string status)
+    {
+        Message = message;
+        Status = status;
+        ClassToast = "toast show";
+        StateHasChanged();
+        await Task.Delay(3000);
+        ClassToast = "toast hide";
     }
 }

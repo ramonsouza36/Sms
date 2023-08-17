@@ -19,10 +19,10 @@ public class ClassStudent
     public int WorkLoad {get; set; } = 0;
 
     [NotMapped]
-    public string NameInstr { get; set; }
+    public string? NameInstr { get; set; }
 
     [NotMapped]
-    public string NameCourse { get; set; }
+    public string? NameCourse { get; set; }
 
     #endregion Properties
 }

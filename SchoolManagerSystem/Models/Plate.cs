@@ -15,10 +15,10 @@ public class Plate
     public DateTime PlateDate { get; set; } = DateTime.Now;
 
     [NotMapped]
-    public string NameStudent { get; set; }
+    public string? NameStudent { get; set; }
 
     [NotMapped]
-    public string NameCourse { get; set; }
+    public string? NameCourse { get; set; }
 
     #endregion Properties
 }

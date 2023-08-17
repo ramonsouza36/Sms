@@ -3,6 +3,7 @@
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
 @using SchoolManagerSystem.Services;
+@using SchoolManagerSystem.Pages.Components;
 @using System.Linq;
 @using Microsoft.EntityFrameworkCore;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
@@ -10,40 +11,53 @@
 @inject InstructorsService InstructorsService;
 
 <PageTitle>Instructors</PageTitle>
+<AuthorizeView Roles="Administrativo,Administrador">
+    <Authorized>
+        <div class="container-fluid">
+            <h3>Professores</h3>
+        </div>
+        <div class="container-fluid">
+            <div class="row col-md-12 d-md-inline-flex">
+                <div class="col-md-4">
+                    <label class="label">Nome do professor</label>
+                    <input class="form-control border-secondary col-md-4" type="text" placeholder="Nome" @bind-value="@Name"/>
+                </div>
+                <div class="col-md-4">
+                    <label class="label">Email</label>
+                    <input class="form-control border-secondary col-md-4" type="text" placeholder="Email" @bind-value="@Email"/>
+                </div>
+                <div class="col-md-4">
+                    <label class="label">Valor da hora</label>
+                    <input class="form-control border-secondary col-md-4" type="number" placeholder="Valor hora" @bind-value="@HourlyCost"/>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <label class="label">Qualificações</label>
+                <textarea class="mb-5 lh-md" rows = "5" placeholder="Certificações" @bind="@Certications"></textarea>
+            </div>
+            <div class="mt-3">
+                <button type="button" class="btn btn-primary" @onclick = "(() => SetInstructors())">Salvar</button>
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+</Authorized>
+    <NotAuthorized>
+        @{
+            navManager.NavigateTo("/");
+        }
+    </NotAuthorized>
+</AuthorizeView>
 
-<div class="container-fluid">
-    <h3>Professores</h3>
-</div>
-<div class="container-fluid">
-    <div class="row col-md-12 d-md-inline-flex">
-        <div class="col-md-4">
-            <label class="label">Nome do professor</label>
-            <input class="form-control border-secondary col-md-4" type="text" placeholder="Nome" @bind-value="@Name"/>
-        </div>
-        <div class="col-md-4">
-            <label class="label">Email</label>
-            <input class="form-control border-secondary col-md-4" type="text" placeholder="Email" @bind-value="@Email"/>
-        </div>
-        <div class="col-md-4">
-            <label class="label">Valor da hora</label>
-            <input class="form-control border-secondary col-md-4" type="number" placeholder="Valor hora" @bind-value="@HourlyCost"/>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <label class="label">Qualificações</label>
-        <textarea class="mb-5 lh-md" rows = "5" placeholder="Certificações" @bind="@Certications"></textarea>
-    </div>
-    <div class="mt-3">
-        <button type="button" class="btn btn-primary" @onclick = "(() => SetInstructors())">Salvar</button>
-        <button type="button" class="btn btn-secondary">Cancelar</button>
-    </div>
-</div>
+<Toast ClassToast="@ClassToast" Message="@Message" Status="@Status"/>
 
 @code{
     public string Name = "";
     public string Email = "";
     public int HourlyCost = 0;
     public string Certications = "";
+    public string ClassToast { get; set; } = "toast hide";
+    public string Message = string.Empty;
+    public string Status = string.Empty;
 
     [Parameter]
     public Guid? id { get; set; }
@@ -79,7 +93,20 @@
             await InstructorsService.UpdateInstructorAsync(DbFactory, instructor);
         }
 
+        var message = "Cadastro realizado com sucesso!";
+        var status = "bg-success text-white";
+        await ShowToast(message, status);
         navManager.NavigateTo($"/instructors", true);   
+    }
+
+    public async Task ShowToast(string message, string status)
+    {
+        Message = message;
+        Status = status;
+        ClassToast = "toast show";
+        StateHasChanged();
+        await Task.Delay(3000);
+        ClassToast = "toast hide";
     }
 
 }

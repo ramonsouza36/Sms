@@ -3,6 +3,7 @@
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
 @using SchoolManagerSystem.Services;
+@using SchoolManagerSystem.Pages.Components;
 @using System.Linq;
 @using Microsoft.EntityFrameworkCore;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
@@ -10,61 +11,68 @@
 @inject CourseService CourseService;
 @inject InstructorsService InstructorsService;
 @inject NavigationManager navManager;
-@using SchoolManagerSystem.Pages.Components
 
 <PageTitle>Course</PageTitle>
-
-<div class="container-fluid">
-    <h3>Turma</h3>
-</div>
-<div class="container-fluid mb-3">
-    <div class="row col-md-12 d-md-inline-flex">
-        <div class="col-md-4">
-            <label class="label">Nome do curso</label>
-            <select class="form-select col-md-4 me-2" type="text" placeholder="Nome Curso" @bind = "CourseId">
-                <option value="">Selecione o curso....</option>
-                @if(course != null)
-                {
-                    foreach(var item in course!)
-                    {
-                        <option value="@item.Id">@item.Name</option>
-                    }
-                }
-            </select>
+<AuthorizeView Roles="Administrativo, Administrador">
+    <Authorized>
+        <div class="container-fluid">
+            <h3>Turma</h3>
         </div>
-        <div class="col-md-4">
-            <label class="label">Nome do professor</label>
-            <select class="form-select col-md-4 me-2" type="text" placeholder="Nome Curso" @bind = "InstructorId" >
-                <option value="">Selecione o professor....</option>
-                @if(instructors != null)
-                {
-                    foreach(var item in instructors!)
-                    {
-                        <option value="@item.Id">@item.Name</option>
-                    }
-                }
-            </select>
+        <div class="container-fluid mb-3">
+            <div class="row col-md-12 d-md-inline-flex">
+                <div class="col-md-4">
+                    <label class="label">Nome do curso</label>
+                    <select class="form-select col-md-4 me-2" type="text" placeholder="Nome Curso" @bind = "CourseId">
+                        <option value="">Selecione o curso....</option>
+                        @if(course != null)
+                        {
+                            foreach(var item in course!)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="label">Nome do professor</label>
+                    <select class="form-select col-md-4 me-2" type="text" placeholder="Nome Curso" @bind = "InstructorId" >
+                        <option value="">Selecione o professor....</option>
+                        @if(instructors != null)
+                        {
+                            foreach(var item in instructors!)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="label">Carga horária</label>
+                    <input class="form-control border-secondary col-md-4 me-2" type="number" placeholder="Carga horária" @bind-value="@WorkLoad"/>
+                </div>
+            </div>
+            <div class="row col-md-12 mt-3 d-md-inline-flex">
+                <div class="col-md-6">
+                    <label class="label">Data de início</label>
+                    <input type="date" class="form-control col-md-6" placeholder="Data início">
+                </div>
+                <div class="col-md-6">
+                    <label class="label">Data de término</label>
+                    <input type="date" class="form-contro col-md-6l" placeholder="Data término">
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="button" class="btn btn-primary" @onclick = "(() => SetCourse())">Salvar</button>
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+            </div>
         </div>
-        <div class="col-md-4">
-            <label class="label">Carga horária</label>
-            <input class="form-control border-secondary col-md-4 me-2" type="number" placeholder="Carga horária" @bind-value="@WorkLoad"/>
-        </div>
-    </div>
-    <div class="row col-md-12 mt-3 d-md-inline-flex">
-        <div class="col-md-6">
-            <label class="label">Data de início</label>
-            <input type="date" class="form-control col-md-6" placeholder="Data início">
-        </div>
-        <div class="col-md-6">
-            <label class="label">Data de término</label>
-            <input type="date" class="form-contro col-md-6l" placeholder="Data término">
-        </div>
-    </div>
-    <div class="mt-3">
-        <button type="button" class="btn btn-primary" @onclick = "(() => SetCourse())">Salvar</button>
-        <button type="button" class="btn btn-secondary">Cancelar</button>
-    </div>
-</div>
+    </Authorized>
+    <NotAuthorized>
+        @{
+            navManager.NavigateTo("/");
+        }
+    </NotAuthorized>
+</AuthorizeView>
 
 <Toast ClassToast="@ClassToast" Message="@Message" Status="@Status"/>
             
@@ -124,8 +132,8 @@
         Message = message;
         Status = status;
         ClassToast = "toast show";
+        StateHasChanged();
         await Task.Delay(3000);
         ClassToast = "toast hide";
-        StateHasChanged();
     }
 }

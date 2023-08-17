@@ -12,34 +12,42 @@
 @inject UserService UserService;
 @inject NavigationManager navManager;
 @inject AuthenticationStateProvider GetAuthenticationStateAsync;
-
-<div class="container-fluid ps-0">
-    <h3>Meus Cursos</h3>
-</div>
-<div class="container-fluid">
-    <div class="row col-md-12 d-md-inline-flex">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Curso</th>
-                    <th>Data de matrícula</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (studentPlates is not null)
-                {
-                    foreach(var item in studentPlates)
-                    {
+<AuthorizeView Roles="Aluno">
+    <Authorized>
+        <div class="container-fluid ps-0">
+            <h3>Meus Cursos</h3>
+        </div>
+        <div class="container-fluid">
+            <div class="row col-md-12 d-md-inline-flex">
+                <table class="table table-striped table-hover">
+                    <thead>
                         <tr>
-                            <td>@item.NameCourse</td>
-                            <td>@item.PlateDate.Date</td>
+                            <th>Curso</th>
+                            <th>Data de matrícula</th>
                         </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
+                    </thead>
+                    <tbody>
+                        @if (studentPlates is not null)
+                        {
+                            foreach(var item in studentPlates)
+                            {
+                                <tr>
+                                    <td>@item.NameCourse</td>
+                                    <td>@item.PlateDate.Date</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        @{
+            navManager.NavigateTo("/");
+        }
+    </NotAuthorized>
+</AuthorizeView>
 @code{
     [Parameter]
     public Guid? id { get; set; }

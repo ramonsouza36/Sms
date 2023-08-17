@@ -9,60 +9,72 @@
 @inject RoleService RoleService;
 @inject NavigationManager navManager;
 @using SchoolManagerSystem.Pages.Components
+<AuthorizeView Roles="Administrador">
+    <Authorized>
+        <PageTitle>Plate</PageTitle>
 
-<PageTitle>Plate</PageTitle>
-
-<div class="container-fluid">
-    <h3>Papel</h3>
-</div>
-<div class="container-fluid mb-3">
-    <div class="row col-md-12">
-        <div>
-            <label class="label">Nome do papel</label>
-            <input type="text" class="form-control col-md-10 mt-0" placeholder="Nome Papel" @bind-value="nameRole"> 
+        <div class="container-fluid">
+            <h3>Papel</h3>
         </div>
-        <div class="col-md-2">
-            <button type="button" class="btn btn-primary" @onclick="(() => SetRole())">Salvar</button>
-        </div>
-    </div>
-    <div class="row col-md-12 d-md-inline-flex">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>
-                        <div class="divBotoes">
-                            Opções
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (roles is not null)
-                {
-                    foreach(var item in roles)
-                    {
+        <div class="container-fluid mb-3">
+            <div class="row col-md-12">
+                <div>
+                    <label class="label">Nome do papel</label>
+                    <input type="text" class="form-control col-md-10 mt-0" placeholder="Nome Papel" @bind-value="nameRole"> 
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" @onclick="(() => SetRole())">Salvar</button>
+                </div>
+            </div>
+            <div class="row col-md-12 d-md-inline-flex">
+                <table class="table table-striped table-hover">
+                    <thead>
                         <tr>
-                            <td>@item.Name</td>
-                            <td>
+                            <th>Nome</th>
+                            <th>
                                 <div class="divBotoes">
-                                    <a title="Excluir" class="btn btn-danger text-right float-right" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => DeleteRole(item.Id))">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
+                                    Opções
                                 </div>
-                            </td>
+                            </th>
                         </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
+                    </thead>
+                    <tbody>
+                        @if (roles is not null)
+                        {
+                            foreach(var item in roles)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>
+                                        <div class="divBotoes">
+                                            <a title="Excluir" class="btn btn-danger text-right float-right" role="button" data-bs-toggle="button" aria-pressed="true" @onclick="(() => DeleteRole(item.Id))">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        @{
+            navManager.NavigateTo("/");
+        }
+    </NotAuthorized>
+</AuthorizeView>
 
+<Toast ClassToast="@ClassToast" Message="@Message" Status="@Status"/>
 
 @code{
 
     public string nameRole = string.Empty;
+    public string ClassToast { get; set; } = "toast hide";
+    public string Message = string.Empty;
+    public string Status = string.Empty;
 
     List<IdentityRole>? roles {get; set; }
 
@@ -74,7 +86,11 @@
     private async Task SetRole()
     {
         if(!string.IsNullOrEmpty(nameRole) && !string.IsNullOrWhiteSpace(nameRole))
-            await RoleService.SetRoleAsync(DbFactory,nameRole);           
+            await RoleService.SetRoleAsync(DbFactory,nameRole);  
+
+        var message = "Cadastro realizado com sucesso!";
+        var status = "bg-success text-white";
+        await ShowToast(message, status);           
         navManager.NavigateTo($"/roles", true);  
     }
 
@@ -82,5 +98,15 @@
     {
         await RoleService.DeleteRoleAsync(DbFactory,id);
         navManager.NavigateTo($"/roles", true);
+    }
+
+    public async Task ShowToast(string message, string status)
+    {
+        Message = message;
+        Status = status;
+        ClassToast = "toast show";
+        StateHasChanged();
+        await Task.Delay(3000);
+        ClassToast = "toast hide";
     }
 }

@@ -3,47 +3,58 @@
 @using SchoolManagerSystem.Models;
 @using SchoolManagerSystem.Data;
 @using SchoolManagerSystem.Services;
+@using SchoolManagerSystem.Pages.Components;
 @using System.Linq;
 @using Microsoft.EntityFrameworkCore;
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager navManager;
 @inject StudentService StudentService;
+<AuthorizeView Roles="Administrativo,Administrador">
+    <Authorized>
+        <PageTitle>Students</PageTitle>
 
-<PageTitle>Students</PageTitle>
+        <div class="container-fluid">
+            <h3>Estudantes</h3>
+        </div>
+        <div class="container-fluid">
+            <div class="row col-md-12 d-md-inline-flex">
+                <div class="col-md-3">
+                    <label class="label">Nome do aluno</label>
+                    <input class="form-control border-secondary col-md-3" type="text" placeholder="Nome" @bind-value="@Name"/>
+                </div>
+                <div class="col-md-3">
+                    <label class="label">Documento</label>
+                    <input class="form-control border-secondary col-md-3" type="text" placeholder="Documento" @bind-value="@FederalRegistration"/>
+                </div>
+                <div class="col-md-3">
+                    <label class="label">Email</label>
+                    <input class="form-control border-secondary col-md-3" type="text" placeholder="Email" @bind-value="@Email"/>
+                </div>
+                <div class="col-md-3">
+                    <label class="label">Telefone</label>
+                    <input class="form-control border-secondary col-md-3" type="text" placeholder="Telefone" @bind-value="@PhoneNumber"/>
+                </div>
+            </div>
+            <div class="row col-md-12 d-md-inline-flex mt-3">
+                <div class="col-md-3">
+                    <label class="label">Data de nascimento</label>
+                    <input class="form-control border-secondary col-md-4 me-2" type="date" @bind-value="@BirthDate"/>
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="button" class="btn btn-primary" @onclick = "(() => SetStudent())">Salvar</button>
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        @{
+            navManager.NavigateTo("/");
+        }
+    </NotAuthorized>
+</AuthorizeView>
 
-<div class="container-fluid">
-    <h3>Estudantes</h3>
-</div>
-<div class="container-fluid">
-    <div class="row col-md-12 d-md-inline-flex">
-        <div class="col-md-3">
-            <label class="label">Nome do aluno</label>
-            <input class="form-control border-secondary col-md-3" type="text" placeholder="Nome" @bind-value="@Name"/>
-        </div>
-        <div class="col-md-3">
-            <label class="label">Documento</label>
-            <input class="form-control border-secondary col-md-3" type="text" placeholder="Documento" @bind-value="@FederalRegistration"/>
-        </div>
-        <div class="col-md-3">
-            <label class="label">Email</label>
-            <input class="form-control border-secondary col-md-3" type="text" placeholder="Email" @bind-value="@Email"/>
-        </div>
-        <div class="col-md-3">
-            <label class="label">Telefone</label>
-            <input class="form-control border-secondary col-md-3" type="text" placeholder="Telefone" @bind-value="@PhoneNumber"/>
-        </div>
-    </div>
-    <div class="row col-md-12 d-md-inline-flex mt-3">
-        <div class="col-md-3">
-            <label class="label">Data de nascimento</label>
-            <input class="form-control border-secondary col-md-4 me-2" type="date" @bind-value="@BirthDate"/>
-        </div>
-    </div>
-    <div class="mt-3">
-        <button type="button" class="btn btn-primary" @onclick = "(() => SetStudent())">Salvar</button>
-        <button type="button" class="btn btn-secondary">Cancelar</button>
-    </div>
-</div>
+<Toast ClassToast="@ClassToast" Message="@Message" Status="@Status"/>
 
 @code{
     public string Name = "";
@@ -51,6 +62,10 @@
     public string PhoneNumber = "";
     public string Email = "";
     public DateTime BirthDate = DateTime.Now;
+    public string ClassToast { get; set; } = "toast hide";
+    public string Message = string.Empty;
+    public string Status = string.Empty;
+
     
     [Parameter]
     public Guid? id { get; set; }
@@ -86,6 +101,20 @@
             student.Id = id.Value;
             await StudentService.UpdateStudentAsync(DbFactory, student);
         }
+
+        var message = "Cadastro realizado com sucesso!";
+        var status = "bg-success text-white";
+        await ShowToast(message, status);      
         navManager.NavigateTo($"/students", true);   
+    }
+
+    public async Task ShowToast(string message, string status)
+    {
+        Message = message;
+        Status = status;
+        ClassToast = "toast show";
+        StateHasChanged();
+        await Task.Delay(3000);
+        ClassToast = "toast hide";
     }
 }
