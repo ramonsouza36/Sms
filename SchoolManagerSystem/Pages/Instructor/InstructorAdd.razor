@@ -27,8 +27,8 @@
                     <input class="form-control border-secondary col-md-4" type="text" placeholder="Email" @bind-value="@Email"/>
                 </div>
                 <div class="col-md-4">
-                    <label class="label">Valor da hora</label>
-                    <input class="form-control border-secondary col-md-4" type="number" placeholder="Valor hora" @bind-value="@HourlyCost"/>
+                    <label class="label">Telefone</label>
+                    <input class="form-control border-secondary col-md-4" type="number" placeholder="Telefone" @bind-value="@PhoneNumber"/>
                 </div>
             </div>
             <div class="row mt-3">
@@ -53,7 +53,7 @@
 @code{
     public string Name = "";
     public string Email = "";
-    public int HourlyCost = 0;
+    public string PhoneNumber = "";
     public string Certications = "";
     public string ClassToast { get; set; } = "toast hide";
     public string Message = string.Empty;
@@ -71,7 +71,7 @@
             {
                 Name = instructor!.Name!;
                 Email = instructor!.Email!;
-                HourlyCost = instructor.HourlyCost;
+                PhoneNumber = instructor!.PhoneNumber!;
                 Certications = instructor!.Certications!;
             }
         }
@@ -82,7 +82,7 @@
         var instructor = new Instructor();
         instructor.Name = Name;
         instructor.Email = Email;
-        instructor.HourlyCost = HourlyCost;
+        instructor.PhoneNumber = PhoneNumber;
         instructor.Certications = Certications;
 
         if(!id.HasValue)

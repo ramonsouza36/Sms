@@ -15,7 +15,7 @@ public class Instructor
 
     public string? Email { get; set; }
 
-    public int HourlyCost { get; set; } = 0;
+    public string? PhoneNumber { get; set; }
 
     public string? Certications { get; set; }
 
