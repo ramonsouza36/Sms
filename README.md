@@ -9,12 +9,25 @@
 Um sistema de gerenciamento escolar pensado para instituições de ensino de cursos técnicos e profissionalizantes, 
 capaz de fazer as principais operações necessárias para alunos, professores e secretaria.
 
+Projeto feito para fins de estudo de algumas tecnologias utilizadas no mercado.
+
 Foi feito utilizando Dotnet 7, com o Entity Framework e utilizando o framework Blazor para criação das interfaces 
 do usuário e pela sua facilidade em juntar o HTML com o C# e com todas as operações de backend e registro de dados 
 feito em arquivos de serviço, deixando assim o frontend somente com responsabilidade de exibir e validações básicas.
 Foi utilizado também o PostgreSql para banco de dadosm e utilizando o Identity para controle de usuários e autorização.
 
+## Pré-requisitos
+
+  - Ter o .Net 7 instalado na máquina
+  - Ter o PostgreSql na versão 12 ou maior instalado
+
 ## Instalação e execução
+
+  - Clonar o repositório para sua máquina
+  - Abrir um console ou terminal na pasta em que o arquivo .csproj está salvo
+  - Caso não tenha instalar o Entity Framework
+  - Executar o comando para rodar as migrations do PostgreSql e criar o banco
+  - Executar o comando de build e de run para inicializar a aplicação
 
 ## Tecnologias utilizadas
 
